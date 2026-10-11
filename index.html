@@ -40,7 +40,6 @@
     <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-    <!-- Added for advanced interactive EXIF & Color Picking -->
     <script src="https://cdn.jsdelivr.net/npm/exif-js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@jaames/iro@5"></script>
 
@@ -57,9 +56,7 @@
             --card-padding: 1.75rem;
         }
 
-        html {
-            font-size: var(--base-font-size);
-        }
+        html { font-size: var(--base-font-size); }
 
         body {
             background-color: var(--bg-color);
@@ -73,7 +70,14 @@
         .font-display { font-family: 'Archivo Black', sans-serif; }
         .font-mono-code { font-family: 'Space Mono', monospace; }
 
-        /* Editorial Corner Accents */ 
+        /* Customizing Iro.js handles for clean look inside frame */
+        .IroHandle circle {
+            stroke: rgba(255, 255, 255, 0.8) !important;
+            stroke-width: 2px !important;
+            filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.5));
+        }
+
+        /* Editorial Corner Accents */
         .editorial-card {
             background-color: var(--card-bg);
             border: 1px solid var(--border-color);
@@ -94,33 +98,23 @@
         .editorial-card::before { top: -1px; left: -1px; border-top: 1px solid; border-left: 1px solid; }
         .editorial-card::after { bottom: -1px; right: -1px; border-bottom: 1px solid; border-right: 1px solid; }
 
-        .editorial-card:hover {
-            border-color: var(--text-color);
-        }
+        .editorial-card:hover { border-color: var(--text-color); }
 
         .editorial-btn {
             background-color: var(--btn-bg);
             color: var(--btn-text);
             transition: all 0.2s ease;
         }
-
-        .editorial-btn:hover {
-            opacity: 0.9;
-            transform: translateY(-1px);
-        }
+        .editorial-btn:hover { opacity: 0.9; transform: translateY(-1px); }
 
         .editorial-btn-outline {
             border: 1px solid var(--border-color);
             color: var(--text-color);
             transition: all 0.2s ease;
         }
+        .editorial-btn-outline:hover { border-color: var(--text-color); background-color: var(--card-bg); }
 
-        .editorial-btn-outline:hover {
-            border-color: var(--text-color);
-            background-color: var(--card-bg);
-        }
-
-        /* Custom Dropdowns / Select Options */
+        /* Custom Dropdowns */
         select {
             -webkit-appearance: none;
             -moz-appearance: none;
@@ -134,38 +128,12 @@
             padding-right: 2rem !important;
             cursor: pointer;
         }
+        select option { background-color: var(--bg-color); color: var(--text-color); padding: 0.5rem; font-family: 'Space Mono', monospace; }
+        select:focus { outline: none; border-color: var(--text-color); }
 
-        select option {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            padding: 0.5rem;
-            font-family: 'Space Mono', monospace;
-        }
-
-        select:focus {
-            outline: none;
-            border-color: var(--text-color);
-        }
-
-        /* Custom Segmented Language Buttons */
-        .lang-btn {
-            border: 1px solid var(--border-color);
-            padding: 0.5rem 0.25rem;
-            text-align: center;
-            font-family: 'Space Mono', monospace;
-            font-size: 0.7rem;
-            transition: all 0.2s ease;
-            cursor: pointer;
-            background-color: transparent;
-            color: var(--text-color);
-        }
-
-        .lang-btn.active {
-            background-color: var(--btn-bg);
-            color: var(--btn-text);
-            font-weight: bold;
-            border-color: var(--btn-bg);
-        }
+        /* Mobile Scrollbar Hide */
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
         /* Range Slider & Custom Checkbox */
         input[type="range"] {
@@ -176,7 +144,6 @@
             border-radius: 2px;
             outline: none;
         }
-
         input[type="range"]::-webkit-slider-thumb {
             -webkit-appearance: none;
             appearance: none;
@@ -187,10 +154,7 @@
             cursor: pointer;
             transition: transform 0.15s ease;
         }
-
-        input[type="range"]::-webkit-slider-thumb:hover {
-            transform: scale(1.3);
-        }
+        input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.3); }
 
         .custom-checkbox {
             appearance: none;
@@ -203,7 +167,6 @@
             cursor: pointer;
             transition: all 0.2s ease;
         }
-
         .custom-checkbox::before {
             content: "";
             width: 8px;
@@ -212,14 +175,8 @@
             transition: 0.15s transform ease-in-out;
             box-shadow: inset 1em 1em var(--text-color);
         }
-
-        .custom-checkbox:checked {
-            border-color: var(--text-color);
-        }
-
-        .custom-checkbox:checked::before {
-            transform: scale(1);
-        }
+        .custom-checkbox:checked { border-color: var(--text-color); }
+        .custom-checkbox:checked::before { transform: scale(1); }
 
         /* Scrollbar */
         ::-webkit-scrollbar { width: 5px; height: 5px; }
@@ -227,10 +184,7 @@
         ::-webkit-scrollbar-thumb { background: var(--border-color); }
         ::-webkit-scrollbar-thumb:hover { background: var(--text-color); }
 
-        .active-tab-nav {
-            border-bottom: 2px solid var(--text-color);
-            color: var(--text-color) !important;
-        }
+        .active-tab-nav { border-bottom: 2px solid var(--text-color); color: var(--text-color) !important; }
 
         .pulse-dot {
             width: 8px;
@@ -245,30 +199,37 @@
 </head>
 <body class="min-h-screen flex flex-col justify-between antialiased selection:bg-brandLight selection:text-brandDark">
 
-    <!-- Header / Taskbar -->
-    <header class="border-b border-brandBorder px-6 lg:px-12 py-5 sticky top-0 bg-brandDark/95 backdrop-blur-md z-40 flex items-center justify-between">
-        <div class="flex items-center space-x-6">
+    <!-- Global Fullscreen Drop Overlay -->
+    <div id="global-drag-overlay" class="fixed inset-0 bg-brandDark/90 backdrop-blur-md z-[100] hidden flex-col items-center justify-center border-4 border-dashed border-brandLight transition-all duration-300">
+        <i class="fa-solid fa-cloud-arrow-up text-6xl lg:text-8xl mb-6 text-brandLight pulse-dot" style="animation-duration: 1.5s;"></i>
+        <h2 class="font-display text-3xl sm:text-4xl text-brandLight uppercase mt-4">DROP FILE ANYWHERE</h2>
+        <p class="font-mono text-brandLight/60 mt-2 text-center max-w-md px-4">File will be loaded instantly into the active tool.</p>
+    </div>
+
+    <!-- Responsive Header / Taskbar -->
+    <header class="border-b border-brandBorder px-4 lg:px-12 py-3 lg:py-5 sticky top-0 bg-brandDark/95 backdrop-blur-md z-40 flex flex-wrap lg:flex-nowrap items-center justify-between gap-y-3">
+        <div class="flex items-center justify-between w-full lg:w-auto">
             <button onclick="switchView('home')" class="flex items-center space-x-3 group">
                 <span class="pulse-dot"></span>
-                <span class="font-display text-2xl tracking-tighter uppercase group-hover:opacity-80 transition">NAR/DONA</span>
+                <span class="font-display text-xl lg:text-2xl tracking-tighter uppercase group-hover:opacity-80 transition">NAR/DONA</span>
+            </button>
+            <button onclick="openModal('settings-modal')" class="lg:hidden editorial-btn-outline px-3 py-1.5 text-xs font-mono flex items-center justify-center">
+                <i class="fa-solid fa-gear"></i>
             </button>
         </div>
 
-        <!-- Navigation Tabs -->
-        <nav class="flex items-center space-x-4 sm:space-x-8 font-mono text-xs tracking-wider">
-            <button id="nav-home" onclick="switchView('home')" class="py-1 opacity-60 hover:opacity-100 transition active-tab-nav uppercase" data-i18n="nav_home">HOME</button>
-            <button id="nav-toolkit" onclick="switchView('toolkit')" class="py-1 opacity-60 hover:opacity-100 transition uppercase" data-i18n="nav_toolkit">TOOLKIT</button>
-            <button id="nav-media" onclick="switchView('media')" class="py-1 opacity-60 hover:opacity-100 transition uppercase" data-i18n="nav_media">MEDIA</button>
-            <button id="nav-projects" onclick="switchView('projects')" class="py-1 opacity-60 hover:opacity-100 transition uppercase" data-i18n="nav_projects">PROJECTS</button>
+        <nav class="flex items-center overflow-x-auto hide-scrollbar space-x-6 sm:space-x-8 font-mono text-xs tracking-wider w-full lg:w-auto lg:justify-center pb-1 lg:pb-0">
+            <button id="nav-home" onclick="switchView('home')" class="py-1 opacity-60 hover:opacity-100 transition active-tab-nav uppercase whitespace-nowrap" data-i18n="nav_home">HOME</button>
+            <button id="nav-toolkit" onclick="switchView('toolkit')" class="py-1 opacity-60 hover:opacity-100 transition uppercase whitespace-nowrap" data-i18n="nav_toolkit">TOOLKIT</button>
+            <button id="nav-media" onclick="switchView('media')" class="py-1 opacity-60 hover:opacity-100 transition uppercase whitespace-nowrap" data-i18n="nav_media">RESOURCES</button>
+            <button id="nav-projects" onclick="switchView('projects')" class="py-1 opacity-60 hover:opacity-100 transition uppercase whitespace-nowrap" data-i18n="nav_projects">PROJECTS</button>
         </nav>
 
-        <!-- Right Header Items -->
-        <div class="flex items-center space-x-4">
+        <div class="hidden lg:flex items-center space-x-4">
             <button onclick="openModal('settings-modal')" class="editorial-btn-outline p-2 text-xs font-mono flex items-center space-x-2" title="Settings">
                 <i class="fa-solid fa-gear"></i>
             </button>
-
-            <div class="hidden lg:block text-right font-mono">
+            <div class="text-right font-mono">
                 <div id="header-time" class="text-sm font-bold">00:00:00</div>
                 <div id="header-date" class="text-[10px] tracking-wider opacity-60 uppercase">OCT 09, 2026</div>
             </div>
@@ -276,31 +237,27 @@
     </header>
 
     <!-- Main Container -->
-    <main class="flex-1 max-w-[1600px] w-full mx-auto px-4 sm:px-6 lg:px-12 py-8">
+    <main class="flex-1 max-w-[1600px] w-full mx-auto px-4 sm:px-6 lg:px-12 py-6 lg:py-8">
 
         <!-- ========================================== -->
         <!-- 1. HOME VIEW -->
         <!-- ========================================== -->
-        <div id="view-home" class="space-y-12 transition-opacity duration-300">
+        <div id="view-home" class="space-y-8 lg:space-y-12 transition-opacity duration-300">
             
-            <!-- Minimalist Pure Editorial Hero Banner -->
-            <section class="editorial-card relative overflow-hidden py-12 px-8 sm:px-12">
+            <section class="editorial-card relative overflow-hidden py-10 lg:py-12 px-6 lg:px-12">
                 <div class="space-y-4 max-w-3xl">
                     <div class="flex items-center space-x-2 text-xs font-mono opacity-60">
                         <i class="fa-regular fa-compass text-xs"></i>
                         <span data-i18n="hero_tag">PERSONAL WORKSPACE</span>
                     </div>
-                    <h1 class="font-display text-5xl sm:text-7xl lg:text-8xl uppercase leading-none tracking-tight">
+                    <h1 class="font-display text-4xl sm:text-6xl lg:text-8xl uppercase leading-none tracking-tight break-words">
                         SORT & EXECUTE.
                     </h1>
                 </div>
             </section>
 
-            <!-- Navigation Cards -->
-            <section class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                
-                <!-- Card 1: Toolkit -->
-                <div onclick="switchView('toolkit')" class="editorial-card cursor-pointer group flex flex-col justify-between h-60 hover:bg-brandLight hover:text-brandDark transition-all duration-300">
+            <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div onclick="switchView('toolkit')" class="editorial-card cursor-pointer group flex flex-col justify-between h-56 lg:h-60 hover:bg-brandLight hover:text-brandDark transition-all duration-300">
                     <div class="flex justify-between items-start">
                         <div class="flex items-center space-x-2 text-xs font-mono opacity-60 group-hover:text-brandDark">
                             <i class="fa-solid fa-wrench text-xs"></i>
@@ -309,8 +266,8 @@
                         <i class="fa-solid fa-arrow-up-right-from-square text-sm opacity-60 group-hover:text-brandDark"></i>
                     </div>
                     <div>
-                        <h2 class="font-display text-3xl uppercase tracking-tight mb-1" data-i18n="nav_toolkit">TOOLKIT</h2>
-                        <p class="text-xs font-mono opacity-60 group-hover:text-brandDark/80" data-i18n="desc_toolkit">
+                        <h2 class="font-display text-2xl lg:text-3xl uppercase tracking-tight mb-1" data-i18n="nav_toolkit">TOOLKIT</h2>
+                        <p class="text-[11px] lg:text-xs font-mono opacity-60 group-hover:text-brandDark/80" data-i18n="desc_toolkit">
                             Essential web developer utilities and file converters.
                         </p>
                     </div>
@@ -320,29 +277,27 @@
                     </div>
                 </div>
 
-                <!-- Card 2: Media -->
-                <div onclick="switchView('media')" class="editorial-card cursor-pointer group flex flex-col justify-between h-60 hover:bg-brandLight hover:text-brandDark transition-all duration-300">
+                <div onclick="switchView('media')" class="editorial-card cursor-pointer group flex flex-col justify-between h-56 lg:h-60 hover:bg-brandLight hover:text-brandDark transition-all duration-300">
                     <div class="flex justify-between items-start">
                         <div class="flex items-center space-x-2 text-xs font-mono opacity-60 group-hover:text-brandDark">
-                            <i class="fa-solid fa-photo-film text-xs"></i>
-                            <span>MEDIA</span>
+                            <i class="fa-solid fa-folder-open text-xs"></i>
+                            <span>RESOURCES</span>
                         </div>
                         <i class="fa-solid fa-arrow-up-right-from-square text-sm opacity-60 group-hover:text-brandDark"></i>
                     </div>
                     <div>
-                        <h2 class="font-display text-3xl uppercase tracking-tight mb-1" data-i18n="nav_media">MEDIA</h2>
-                        <p class="text-xs font-mono opacity-60 group-hover:text-brandDark/80" data-i18n="desc_media">
-                            Personal media hub and external link collection.
+                        <h2 class="font-display text-2xl lg:text-3xl uppercase tracking-tight mb-1" data-i18n="nav_media">RESOURCES</h2>
+                        <p class="text-[11px] lg:text-xs font-mono opacity-60 group-hover:text-brandDark/80" data-i18n="desc_media">
+                            Resources hub and external link collection.
                         </p>
                     </div>
                     <div class="flex items-center text-xs font-mono font-bold tracking-widest space-x-2">
-                        <span data-i18n="launch_media">OPEN MEDIA</span>
+                        <span data-i18n="launch_media">OPEN RESOURCES</span>
                         <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
                     </div>
                 </div>
 
-                <!-- Card 3: Projects -->
-                <div onclick="switchView('projects')" class="editorial-card cursor-pointer group flex flex-col justify-between h-60 hover:bg-brandLight hover:text-brandDark transition-all duration-300">
+                <div onclick="switchView('projects')" class="editorial-card cursor-pointer group flex flex-col justify-between h-56 lg:h-60 hover:bg-brandLight hover:text-brandDark transition-all duration-300 sm:col-span-2 lg:col-span-1">
                     <div class="flex justify-between items-start">
                         <div class="flex items-center space-x-2 text-xs font-mono opacity-60 group-hover:text-brandDark">
                             <i class="fa-solid fa-diagram-project text-xs"></i>
@@ -351,8 +306,8 @@
                         <i class="fa-solid fa-arrow-up-right-from-square text-sm opacity-60 group-hover:text-brandDark"></i>
                     </div>
                     <div>
-                        <h2 class="font-display text-3xl uppercase tracking-tight mb-1" data-i18n="nav_projects">PROJECTS</h2>
-                        <p class="text-xs font-mono opacity-60 group-hover:text-brandDark/80" data-i18n="desc_projects">
+                        <h2 class="font-display text-2xl lg:text-3xl uppercase tracking-tight mb-1" data-i18n="nav_projects">PROJECTS</h2>
+                        <p class="text-[11px] lg:text-xs font-mono opacity-60 group-hover:text-brandDark/80" data-i18n="desc_projects">
                             Personal projects, active builds, and repository links.
                         </p>
                     </div>
@@ -361,32 +316,122 @@
                         <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
                     </div>
                 </div>
-
             </section>
 
-            <!-- Bookmarks Directory Section -->
+            <!-- ABOUT Section (Restored) -->
             <section class="editorial-card space-y-6">
-                <div class="flex flex-col md:flex-row md:items-center justify-between border-b border-brandBorder pb-5 gap-4">
-                    <div class="space-y-1">
-                        <div class="flex items-center space-x-2 text-xs font-mono opacity-60">
-                            <i class="fa-solid fa-bookmark text-xs"></i>
-                            <span data-i18n="bm_tag">QUICK ACCESS DIRECTORY</span>
-                        </div>
-                        <h2 class="font-display text-2xl sm:text-3xl uppercase" data-i18n="bookmarks">BOOKMARKS</h2>
+                <div class="border-b border-brandBorder pb-5">
+                    <div class="flex items-center space-x-2 text-xs font-mono opacity-60">
+                        <i class="fa-solid fa-circle-info text-xs"></i>
+                        <span>SYSTEM INFORMATION & NAVIGATION</span>
                     </div>
-
-                    <div class="flex flex-wrap items-center gap-3">
-                        <input type="text" id="bm-search" oninput="renderBookmarks()" placeholder="Search..." class="bg-transparent border border-brandBorder px-3 py-2 text-xs font-mono focus:outline-none focus:border-brandLight w-44">
-                        
-                        <button onclick="openModal('add-bm-modal')" class="editorial-btn px-4 py-2 text-xs font-mono uppercase font-bold flex items-center space-x-2">
-                            <i class="fa-solid fa-plus text-xs"></i>
-                            <span data-i18n="add_bm">ADD BOOKMARK</span>
-                        </button>
-                    </div>
+                    <h2 class="font-display text-2xl sm:text-3xl uppercase">ABOUT THE WORKSPACE</h2>
                 </div>
+                
+                <div class="space-y-6 font-mono text-xs">
+                    <p class="opacity-80 text-sm max-w-4xl leading-relaxed">
+                        NAR/DONA Workspace is a static, 100% client-side interface designed to streamline developer and designer workflows. It functions as a centralized hub for local data processing, requiring no external servers, ensuring complete privacy, zero uploads, and fast offline capabilities.
+                    </p>
 
-                <div id="bookmark-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                    <!-- Dynamic rendering -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 pt-4 border-t border-brandBorder">
+                        
+                        <!-- Section 1: Pages Directory -->
+                        <div class="space-y-5">
+                            <h3 class="font-bold pb-2 opacity-60 tracking-wider">WORKSPACE DIRECTORY</h3>
+                            <ul class="space-y-4">
+                                <li class="group">
+                                    <button onclick="switchView('home')" class="font-bold flex items-center space-x-2 group-hover:text-brandLight text-sm uppercase text-left transition-colors w-full">
+                                        <i class="fa-solid fa-caret-right opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                                        <span>HOME</span>
+                                    </button>
+                                    <p class="opacity-60 mt-1 pl-5">Dashboard overview, system architecture information, and main navigation hub.</p>
+                                </li>
+                                <li class="group">
+                                    <button onclick="switchView('toolkit')" class="font-bold flex items-center space-x-2 group-hover:text-brandLight text-sm uppercase text-left transition-colors w-full">
+                                        <i class="fa-solid fa-caret-right opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                                        <span>TOOLKIT</span>
+                                    </button>
+                                    <p class="opacity-60 mt-1 pl-5">A powerful suite of client-side developer utilities, security tools, and file processors.</p>
+                                </li>
+                                <li class="group">
+                                    <button onclick="switchView('media')" class="font-bold flex items-center space-x-2 group-hover:text-brandLight text-sm uppercase text-left transition-colors w-full">
+                                        <i class="fa-solid fa-caret-right opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                                        <span>RESOURCES</span>
+                                    </button>
+                                    <p class="opacity-60 mt-1 pl-5">Static repository for media references, external links, and workspace resources.</p>
+                                </li>
+                                <li class="group">
+                                    <button onclick="switchView('projects')" class="font-bold flex items-center space-x-2 group-hover:text-brandLight text-sm uppercase text-left transition-colors w-full">
+                                        <i class="fa-solid fa-caret-right opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                                        <span>PROJECTS</span>
+                                    </button>
+                                    <p class="opacity-60 mt-1 pl-5">Catalog displaying personal builds, ongoing active projects, and Git repository links.</p>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- Section 2: Toolkit Breakdown -->
+                        <div class="space-y-5">
+                            <h3 class="font-bold pb-2 opacity-60 tracking-wider">TOOLKIT MODULES</h3>
+                            <ul class="opacity-90 grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-3">
+                                <li>
+                                    <button onclick="switchView('toolkit'); switchToolTab('json')" class="hover:text-brandLight text-left flex items-center space-x-2 group w-full">
+                                        <i class="fa-solid fa-file-code w-4 opacity-40 group-hover:opacity-100"></i> <span class="group-hover:underline">JSON Formatter</span>
+                                    </button>
+                                </li>
+                                <li>
+                                    <button onclick="switchView('toolkit'); switchToolTab('encode')" class="hover:text-brandLight text-left flex items-center space-x-2 group w-full">
+                                        <i class="fa-solid fa-code w-4 opacity-40 group-hover:opacity-100"></i> <span class="group-hover:underline">Encode / Decode</span>
+                                    </button>
+                                </li>
+                                <li>
+                                    <button onclick="switchView('toolkit'); switchToolTab('url')" class="hover:text-brandLight text-left flex items-center space-x-2 group w-full">
+                                        <i class="fa-solid fa-link-slash w-4 opacity-40 group-hover:opacity-100"></i> <span class="group-hover:underline">URL Cleaner</span>
+                                    </button>
+                                </li>
+                                <li>
+                                    <button onclick="switchView('toolkit'); switchToolTab('qr')" class="hover:text-brandLight text-left flex items-center space-x-2 group w-full">
+                                        <i class="fa-solid fa-qrcode w-4 opacity-40 group-hover:opacity-100"></i> <span class="group-hover:underline">QR Generator</span>
+                                    </button>
+                                </li>
+                                <li>
+                                    <button onclick="switchView('toolkit'); switchToolTab('passhash')" class="hover:text-brandLight text-left flex items-center space-x-2 group w-full">
+                                        <i class="fa-solid fa-key w-4 opacity-40 group-hover:opacity-100"></i> <span class="group-hover:underline">Pass & Hash Gen</span>
+                                    </button>
+                                </li>
+                                <li>
+                                    <button onclick="switchView('toolkit'); switchToolTab('crypto')" class="hover:text-brandLight text-left flex items-center space-x-2 group w-full">
+                                        <i class="fa-solid fa-shield-halved w-4 opacity-40 group-hover:opacity-100"></i> <span class="group-hover:underline">File Encryptor</span>
+                                    </button>
+                                </li>
+                                <li>
+                                    <button onclick="switchView('toolkit'); switchToolTab('meta')" class="hover:text-brandLight text-left flex items-center space-x-2 group w-full">
+                                        <i class="fa-solid fa-magnifying-glass w-4 opacity-40 group-hover:opacity-100"></i> <span class="group-hover:underline">Meta Scanner</span>
+                                    </button>
+                                </li>
+                                <li>
+                                    <button onclick="switchView('toolkit'); switchToolTab('img')" class="hover:text-brandLight text-left flex items-center space-x-2 group w-full">
+                                        <i class="fa-solid fa-image w-4 opacity-40 group-hover:opacity-100"></i> <span class="group-hover:underline">Image & OCR</span>
+                                    </button>
+                                </li>
+                                <li>
+                                    <button onclick="switchView('toolkit'); switchToolTab('color')" class="hover:text-brandLight text-left flex items-center space-x-2 group w-full">
+                                        <i class="fa-solid fa-palette w-4 opacity-40 group-hover:opacity-100"></i> <span class="group-hover:underline">Color Tools</span>
+                                    </button>
+                                </li>
+                                <li>
+                                    <button onclick="switchView('toolkit'); switchToolTab('doc')" class="hover:text-brandLight text-left flex items-center space-x-2 group w-full">
+                                        <i class="fa-solid fa-file-pdf w-4 opacity-40 group-hover:opacity-100"></i> <span class="group-hover:underline">Doc Converter</span>
+                                    </button>
+                                </li>
+                                <li>
+                                    <button onclick="switchView('toolkit'); switchToolTab('pdforg')" class="hover:text-brandLight text-left flex items-center space-x-2 group w-full">
+                                        <i class="fa-solid fa-layer-group w-4 opacity-40 group-hover:opacity-100"></i> <span class="group-hover:underline">PDF Batch</span>
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </section>
 
@@ -395,9 +440,9 @@
         <!-- ========================================== -->
         <!-- 2. TOOLKIT VIEW -->
         <!-- ========================================== -->
-        <div id="view-toolkit" class="space-y-8 hidden transition-opacity duration-300">
+        <div id="view-toolkit" class="space-y-6 lg:space-y-8 hidden transition-opacity duration-300">
             
-            <div class="border-b border-brandBorder pb-6 flex flex-col md:flex-row md:items-end justify-between gap-4">
+            <div class="border-b border-brandBorder pb-4 lg:pb-6 flex flex-col lg:flex-row lg:items-end justify-between gap-4">
                 <div class="space-y-1">
                     <div class="flex items-center space-x-2 text-xs font-mono opacity-60">
                         <i class="fa-solid fa-microchip text-xs"></i>
@@ -406,27 +451,30 @@
                     <h1 class="font-display text-4xl sm:text-5xl uppercase" data-i18n="nav_toolkit">TOOLKIT</h1>
                 </div>
                 
-                <!-- Toolkit Sub-tabs -->
-                <div class="flex flex-wrap gap-2 font-mono text-xs">
-                    <button onclick="switchToolTab('encode')" id="ttab-btn-encode" class="px-4 py-2 border border-brandLight bg-brandLight text-brandDark font-bold">ENCODE / DECODE</button>
-                    <button onclick="switchToolTab('passhash')" id="ttab-btn-passhash" class="px-4 py-2 border border-brandBorder opacity-60 hover:opacity-100">PASS & HASH</button>
-                    <button onclick="switchToolTab('color')" id="ttab-btn-color" class="px-4 py-2 border border-brandBorder opacity-60 hover:opacity-100">COLOR TOOLS</button>
-                    <button onclick="switchToolTab('meta')" id="ttab-btn-meta" class="px-4 py-2 border border-brandBorder opacity-60 hover:opacity-100">META SCANNER</button>
-                    <button onclick="switchToolTab('img')" id="ttab-btn-img" class="px-4 py-2 border border-brandBorder opacity-60 hover:opacity-100">IMAGE TOOLS</button>
-                    <button onclick="switchToolTab('qr')" id="ttab-btn-qr" class="px-4 py-2 border border-brandBorder opacity-60 hover:opacity-100">QR GENERATOR</button>
-                    <button onclick="switchToolTab('doc')" id="ttab-btn-doc" class="px-4 py-2 border border-brandBorder opacity-60 hover:opacity-100">DOC ↔ PDF CONVERTER</button>
+                <div class="flex overflow-x-auto hide-scrollbar gap-2 font-mono text-xs w-full lg:w-auto lg:max-w-4xl lg:justify-end pb-2 lg:pb-0">
+                    <button onclick="switchToolTab('encode')" id="ttab-btn-encode" class="px-3 py-1.5 border border-brandLight bg-brandLight text-brandDark font-bold whitespace-nowrap">ENCODE</button>
+                    <button onclick="switchToolTab('json')" id="ttab-btn-json" class="px-3 py-1.5 border border-brandBorder opacity-60 hover:opacity-100 whitespace-nowrap">JSON</button>
+                    <button onclick="switchToolTab('passhash')" id="ttab-btn-passhash" class="px-3 py-1.5 border border-brandBorder opacity-60 hover:opacity-100 whitespace-nowrap">PASS/HASH</button>
+                    <button onclick="switchToolTab('crypto')" id="ttab-btn-crypto" class="px-3 py-1.5 border border-brandBorder opacity-60 hover:opacity-100 whitespace-nowrap">ENCRYPT</button>
+                    <button onclick="switchToolTab('color')" id="ttab-btn-color" class="px-3 py-1.5 border border-brandBorder opacity-60 hover:opacity-100 whitespace-nowrap">COLOR</button>
+                    <button onclick="switchToolTab('meta')" id="ttab-btn-meta" class="px-3 py-1.5 border border-brandBorder opacity-60 hover:opacity-100 whitespace-nowrap">META</button>
+                    <button onclick="switchToolTab('img')" id="ttab-btn-img" class="px-3 py-1.5 border border-brandBorder opacity-60 hover:opacity-100 whitespace-nowrap">IMAGE</button>
+                    <button onclick="switchToolTab('doc')" id="ttab-btn-doc" class="px-3 py-1.5 border border-brandBorder opacity-60 hover:opacity-100 whitespace-nowrap">DOC/PDF</button>
+                    <button onclick="switchToolTab('pdforg')" id="ttab-btn-pdforg" class="px-3 py-1.5 border border-brandBorder opacity-60 hover:opacity-100 whitespace-nowrap">PDF BATCH</button>
+                    <button onclick="switchToolTab('url')" id="ttab-btn-url" class="px-3 py-1.5 border border-brandBorder opacity-60 hover:opacity-100 whitespace-nowrap">URL CLEAN</button>
+                    <button onclick="switchToolTab('qr')" id="ttab-btn-qr" class="px-3 py-1.5 border border-brandBorder opacity-60 hover:opacity-100 whitespace-nowrap">QR</button>
                 </div>
             </div>
 
             <!-- TOOL 1: Encode & Decode -->
             <div id="ttab-encode" class="toolkit-sub-tab space-y-6">
                 <div class="editorial-card space-y-4">
-                    <div class="flex flex-wrap items-center justify-between gap-4 border-b border-brandBorder pb-3">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-brandBorder pb-3">
                         <div class="flex items-center space-x-2 text-xs font-mono opacity-60">
                             <i class="fa-solid fa-code text-xs"></i>
                             <span>STRING ENCODER & DECODER</span>
                         </div>
-                        <div class="flex space-x-2 font-mono text-xs">
+                        <div class="flex flex-wrap space-x-2 font-mono text-xs gap-y-2">
                             <select id="enc-type" onchange="processEncoder()" class="bg-transparent border border-brandBorder px-3 py-1.5 focus:outline-none">
                                 <option value="base64">BASE64</option>
                                 <option value="url">URL ENCODING</option>
@@ -439,18 +487,45 @@
 
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
                         <div class="space-y-2">
-                            <div class="flex justify-between items-center">
-                                <label class="text-xs font-mono opacity-60 uppercase">Input Data</label>
-                                <span class="text-[10px] font-mono opacity-0 pointer-events-none">&nbsp;</span>
-                            </div>
-                            <textarea id="enc-input" oninput="processEncoder()" placeholder="Type raw text here..." class="w-full h-48 bg-transparent border border-brandBorder p-3 text-xs font-mono focus:outline-none focus:border-brandLight resize-none"></textarea>
+                            <label class="text-xs font-mono opacity-60 uppercase block">Input Data</label>
+                            <textarea id="enc-input" oninput="processEncoder()" placeholder="Type raw text here..." class="w-full h-40 lg:h-48 bg-transparent border border-brandBorder p-3 text-xs font-mono focus:outline-none focus:border-brandLight resize-none"></textarea>
                         </div>
                         <div class="space-y-2">
                             <div class="flex justify-between items-center">
                                 <label class="text-xs font-mono opacity-60 uppercase">Output Result</label>
                                 <button onclick="copyToClipboard('enc-output')" class="text-[10px] font-mono opacity-60 hover:opacity-100"><i class="fa-regular fa-copy"></i> COPY</button>
                             </div>
-                            <textarea id="enc-output" readonly placeholder="Result output..." class="w-full h-48 bg-brandDark/40 border border-brandBorder p-3 text-xs font-mono focus:outline-none resize-none"></textarea>
+                            <textarea id="enc-output" readonly placeholder="Result output..." class="w-full h-40 lg:h-48 bg-brandDark/40 border border-brandBorder p-3 text-xs font-mono focus:outline-none resize-none"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TOOL: JSON FORMATTER -->
+            <div id="ttab-json" class="toolkit-sub-tab space-y-6 hidden">
+                <div class="editorial-card space-y-4">
+                    <div class="flex flex-wrap items-center justify-between gap-4 border-b border-brandBorder pb-3">
+                        <div class="flex items-center space-x-2 text-xs font-mono opacity-60">
+                            <i class="fa-solid fa-file-code text-xs"></i>
+                            <span>JSON FORMATTER & VALIDATOR</span>
+                        </div>
+                        <span id="json-status" class="font-mono text-xs opacity-60">AWAITING INPUT</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                        <div class="space-y-2">
+                            <div class="flex justify-between items-center">
+                                <label class="text-xs font-mono opacity-60 uppercase block">Raw JSON Data</label>
+                                <button onclick="formatJSON()" class="editorial-btn px-4 py-1 text-[10px] font-bold">FORMAT JSON</button>
+                            </div>
+                            <textarea id="json-input" placeholder='{"key": "value"}' class="w-full h-48 lg:h-64 bg-transparent border border-brandBorder p-3 text-xs font-mono focus:outline-none focus:border-brandLight resize-none"></textarea>
+                        </div>
+                        <div class="space-y-2">
+                            <div class="flex justify-between items-center">
+                                <label class="text-xs font-mono opacity-60 uppercase">Formatted Output</label>
+                                <button onclick="copyToClipboard('json-output')" class="text-[10px] font-mono opacity-60 hover:opacity-100"><i class="fa-regular fa-copy"></i> COPY</button>
+                            </div>
+                            <textarea id="json-output" readonly placeholder="Beautified JSON will appear here..." class="w-full h-48 lg:h-64 bg-brandDark/40 border border-brandBorder p-3 text-xs font-mono focus:outline-none resize-none"></textarea>
                         </div>
                     </div>
                 </div>
@@ -498,15 +573,15 @@
                             <div class="space-y-2 pt-1">
                                 <div>
                                     <span class="text-[10px] opacity-60">MD5</span>
-                                    <input type="text" id="hash-md5" readonly class="w-full bg-transparent border border-brandBorder p-1.5 text-[11px] font-mono">
+                                    <input type="text" id="hash-md5" readonly class="w-full bg-transparent border border-brandBorder p-1.5 text-[11px] font-mono truncate">
                                 </div>
                                 <div>
                                     <span class="text-[10px] opacity-60">SHA-256</span>
-                                    <input type="text" id="hash-sha256" readonly class="w-full bg-transparent border border-brandBorder p-1.5 text-[11px] font-mono">
+                                    <input type="text" id="hash-sha256" readonly class="w-full bg-transparent border border-brandBorder p-1.5 text-[11px] font-mono truncate">
                                 </div>
                                 <div>
                                     <span class="text-[10px] opacity-60">SHA-512</span>
-                                    <input type="text" id="hash-sha512" readonly class="w-full bg-transparent border border-brandBorder p-1.5 text-[11px] font-mono">
+                                    <input type="text" id="hash-sha512" readonly class="w-full bg-transparent border border-brandBorder p-1.5 text-[11px] font-mono truncate">
                                 </div>
                             </div>
                         </div>
@@ -514,7 +589,40 @@
                 </div>
             </div>
 
-            <!-- TOOL 3: COLOR TOOLS (Interactive Circle & Converter) -->
+            <!-- TOOL: FILE ENCRYPTOR & DECRYPTOR -->
+            <div id="ttab-crypto" class="toolkit-sub-tab space-y-6 hidden">
+                <div class="editorial-card space-y-4">
+                    <div class="flex items-center space-x-2 text-xs font-mono opacity-60 border-b border-brandBorder pb-2">
+                        <i class="fa-solid fa-shield-halved text-xs"></i>
+                        <span>AES-GCM FILE ENCRYPTOR & DECRYPTOR</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 font-mono text-xs">
+                        <div class="space-y-4">
+                            <div id="crypto-drop-area" onclick="document.getElementById('crypto-file-input').click()" class="border-2 border-dashed border-brandBorder p-8 text-center cursor-pointer hover:border-brandLight transition focus:outline-none overflow-hidden">
+                                <i class="fa-solid fa-lock text-3xl mb-2 opacity-60"></i>
+                                <div id="crypto-filename" class="font-bold truncate px-2">DROP FILE OR CLICK</div>
+                                <span class="text-[10px] opacity-60">Client-Side Encryption Only</span>
+                                <input type="file" id="crypto-file-input" onchange="handleCryptoFileSelect(event)" class="hidden">
+                            </div>
+                        </div>
+
+                        <div class="space-y-3 flex flex-col justify-center">
+                            <div>
+                                <label class="block opacity-60 uppercase mb-1">PASSWORD / SECRET KEY</label>
+                                <input type="password" id="crypto-pass" placeholder="Enter a strong password..." class="w-full bg-transparent border border-brandBorder p-2 focus:outline-none">
+                            </div>
+                            <div class="flex flex-col sm:flex-row gap-3 pt-2">
+                                <button onclick="processCrypto('encrypt')" class="flex-1 editorial-btn py-2.5 font-display text-xs uppercase">ENCRYPT (.enc)</button>
+                                <button onclick="processCrypto('decrypt')" class="flex-1 editorial-btn-outline py-2.5 font-mono text-xs uppercase font-bold">DECRYPT</button>
+                            </div>
+                            <p class="text-[10px] opacity-50 mt-2">Passwords are not stored. If you forget the password, the file cannot be recovered.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TOOL 3: COLOR TOOLS (UPDATED MULTI-SLIDER IN FRAME) -->
             <div id="ttab-color" class="toolkit-sub-tab space-y-6 hidden">
                 <div class="editorial-card space-y-6">
                     <div class="flex items-center space-x-2 text-xs font-mono opacity-60 border-b border-brandBorder pb-2">
@@ -522,43 +630,52 @@
                         <span>COLOR TOOLS & VISUALIZER</span>
                     </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 font-mono text-xs">
-                        <div class="space-y-4 flex flex-col items-center border border-brandBorder p-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 font-mono text-xs">
+                        <!-- Interactive Picker -->
+                        <div class="space-y-4 flex flex-col items-center justify-center border border-brandBorder p-6 lg:p-8">
                             <label class="block opacity-60 uppercase w-full text-center pb-2">Interactive Picker</label>
-                            <!-- Iro.js mount point -->
-                            <div id="color-wheel-container"></div>
-                            
-                            <div class="w-full space-y-1 mt-4">
-                                <span class="text-[10px] opacity-60 block text-center">SWATCH PREVIEW</span>
-                                <div id="clr-swatch" class="w-full h-8 border border-brandBorder transition-colors duration-150" style="background-color: #F8F7F3;"></div>
+                            <div class="p-5 border border-brandBorder rounded-xl bg-brandGray flex flex-col items-center justify-center shadow-inner gap-6 w-full max-w-[280px]">
+                                <div id="color-wheel-container"></div>
                             </div>
                         </div>
 
-                        <div class="md:col-span-2 space-y-3">
-                            <label class="block opacity-60 uppercase mb-2">Color Values & Code To Visualizer</label>
-                            <p class="text-[10px] opacity-50 pb-2">Input your color code below and click VISUALIZE to preview it on the picker.</p>
-                            
-                            <div class="space-y-3">
-                                <div class="flex items-center space-x-2">
-                                    <span class="w-12 opacity-60 font-bold">HEX</span>
-                                    <input type="text" id="clr-hex" value="#F8F7F3" placeholder="#FFFFFF" class="flex-1 bg-transparent border border-brandBorder p-2 focus:outline-none uppercase">
-                                    <button onclick="applyColorFromInput('hex')" class="editorial-btn px-3 py-2 text-[10px] font-bold">VISUALIZE</button>
-                                    <button onclick="copyToClipboard('clr-hex')" class="editorial-btn-outline px-3 py-2 text-[10px]">COPY</button>
-                                </div>
-                                <div class="flex items-center space-x-2">
-                                    <span class="w-12 opacity-60 font-bold">RGB</span>
-                                    <input type="text" id="clr-rgb" value="rgb(248, 247, 243)" placeholder="rgb(255, 255, 255)" class="flex-1 bg-transparent border border-brandBorder p-2 focus:outline-none">
-                                    <button onclick="applyColorFromInput('rgb')" class="editorial-btn px-3 py-2 text-[10px] font-bold">VISUALIZE</button>
-                                    <button onclick="copyToClipboard('clr-rgb')" class="editorial-btn-outline px-3 py-2 text-[10px]">COPY</button>
-                                </div>
-                                <div class="flex items-center space-x-2">
-                                    <span class="w-12 opacity-60 font-bold">HSL</span>
-                                    <input type="text" id="clr-hsl" value="hsl(45, 38%, 96%)" placeholder="hsl(0, 0%, 100%)" class="flex-1 bg-transparent border border-brandBorder p-2 focus:outline-none">
-                                    <button onclick="applyColorFromInput('hsl')" class="editorial-btn px-3 py-2 text-[10px] font-bold">VISUALIZE</button>
-                                    <button onclick="copyToClipboard('clr-hsl')" class="editorial-btn-outline px-3 py-2 text-[10px]">COPY</button>
+                        <!-- Right Side: Preview & Inputs -->
+                        <div class="md:col-span-1 lg:col-span-2 space-y-5 flex flex-col justify-center">
+                            <div class="w-full space-y-1">
+                                <span class="text-[10px] font-bold opacity-60 block">SWATCH PREVIEW</span>
+                                <div id="clr-swatch" class="w-full h-16 lg:h-20 border border-brandBorder transition-colors duration-150 rounded-md shadow-inner" style="background-color: #F8F7F3;"></div>
+                            </div>
+
+                            <div class="space-y-2 pt-2">
+                                <label class="block opacity-60 uppercase mb-2">Color Values To Visualizer</label>
+                                <div class="space-y-3">
+                                    <div class="flex items-center space-x-2">
+                                        <span class="w-10 lg:w-12 opacity-60 font-bold text-[10px] lg:text-xs">HEX</span>
+                                        <input type="text" id="clr-hex" value="#F8F7F3" class="flex-1 bg-transparent border border-brandBorder p-2 focus:outline-none uppercase">
+                                        <button onclick="applyColorFromInput('hex')" class="editorial-btn px-2 lg:px-3 py-2 text-[10px] font-bold">VISUALIZE</button>
+                                        <button onclick="copyToClipboard('clr-hex')" class="editorial-btn-outline px-2 lg:px-3 py-2 text-[10px]">COPY</button>
+                                    </div>
+                                    <div class="flex items-center space-x-2">
+                                        <span class="w-10 lg:w-12 opacity-60 font-bold text-[10px] lg:text-xs">RGB</span>
+                                        <input type="text" id="clr-rgb" value="rgb(248, 247, 243)" class="flex-1 bg-transparent border border-brandBorder p-2 focus:outline-none">
+                                        <button onclick="applyColorFromInput('rgb')" class="editorial-btn px-2 lg:px-3 py-2 text-[10px] font-bold">VISUALIZE</button>
+                                        <button onclick="copyToClipboard('clr-rgb')" class="editorial-btn-outline px-2 lg:px-3 py-2 text-[10px]">COPY</button>
+                                    </div>
+                                    <div class="flex items-center space-x-2">
+                                        <span class="w-10 lg:w-12 opacity-60 font-bold text-[10px] lg:text-xs">HSL</span>
+                                        <input type="text" id="clr-hsl" value="hsl(45, 38%, 96%)" class="flex-1 bg-transparent border border-brandBorder p-2 focus:outline-none">
+                                        <button onclick="applyColorFromInput('hsl')" class="editorial-btn px-2 lg:px-3 py-2 text-[10px] font-bold">VISUALIZE</button>
+                                        <button onclick="copyToClipboard('clr-hsl')" class="editorial-btn-outline px-2 lg:px-3 py-2 text-[10px]">COPY</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                    </div>
+
+                    <!-- Recommended Palettes -->
+                    <div class="border-t border-brandBorder pt-4 font-mono text-xs">
+                        <label class="block opacity-60 uppercase mb-3">RECOMMENDED PALETTES</label>
+                        <div class="flex flex-wrap gap-3" id="palette-container"></div>
                     </div>
                 </div>
             </div>
@@ -566,30 +683,29 @@
             <!-- TOOL 4: UNIVERSAL METADATA SCANNER -->
             <div id="ttab-meta" class="toolkit-sub-tab space-y-6 hidden">
                 <div class="editorial-card space-y-4">
-                    <div class="flex items-center justify-between border-b border-brandBorder pb-2">
+                    <div class="flex flex-wrap items-center justify-between border-b border-brandBorder pb-2 gap-2">
                         <div class="flex items-center space-x-2 text-xs font-mono opacity-60">
-                            <i class="fa-solid fa-file-magnifying-glass text-xs"></i>
+                            <i class="fa-solid fa-magnifying-glass text-xs"></i>
                             <span>UNIVERSAL METADATA SCANNER</span>
                         </div>
-                        <span class="text-[10px] font-mono opacity-50">ALL FILE TYPES SUPPORTED</span>
+                        <span class="text-[10px] font-mono opacity-50">ALL FILES SUPPORTED</span>
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 font-mono text-xs">
                         <div class="space-y-4">
-                            <div onclick="document.getElementById('meta-file-input').click()" class="border-2 border-dashed border-brandBorder p-8 text-center cursor-pointer hover:border-brandLight transition">
+                            <div id="meta-drop-area" onclick="document.getElementById('meta-file-input').click()" class="border-2 border-dashed border-brandBorder p-6 lg:p-8 text-center cursor-pointer hover:border-brandLight transition">
                                 <i class="fa-solid fa-file-arrow-up text-3xl mb-2 opacity-60"></i>
-                                <p class="font-bold">SELECT ANY FILE</p>
+                                <p class="font-bold">DROP FILE OR CLICK</p>
                                 <span class="text-[10px] opacity-60">CLIENT-SIDE INSPECTION</span>
                                 <input type="file" id="meta-file-input" onchange="scanFileMetadata(event)" class="hidden">
                             </div>
                         </div>
-
                         <div class="md:col-span-2 space-y-2">
                             <div class="flex justify-between items-center">
-                                <label class="text-xs font-mono opacity-60 uppercase">SCAN RESULTS & PRIVACY DETAIL</label>
+                                <label class="text-xs font-mono opacity-60 uppercase">SCAN RESULTS</label>
                                 <button onclick="copyToClipboard('meta-output')" class="text-[10px] font-mono opacity-60 hover:opacity-100"><i class="fa-regular fa-copy"></i> COPY</button>
                             </div>
-                            <textarea id="meta-output" readonly placeholder="Select a file to inspect metadata..." class="w-full h-48 bg-brandDark/40 border border-brandBorder p-3 text-xs font-mono focus:outline-none resize-none"></textarea>
+                            <textarea id="meta-output" readonly placeholder="Select or drop a file to inspect metadata..." class="w-full h-40 lg:h-48 bg-brandDark/40 border border-brandBorder p-3 text-xs font-mono focus:outline-none resize-none"></textarea>
                         </div>
                     </div>
                 </div>
@@ -601,21 +717,19 @@
                     <div class="flex items-center justify-between border-b border-brandBorder pb-2">
                         <div class="flex items-center space-x-2 text-xs font-mono opacity-60">
                             <i class="fa-solid fa-image text-xs"></i>
-                            <span>IMAGE CONVERTER, RESIZER, METADATA REMOVER & OCR EXTRACTOR</span>
+                            <span>IMAGE CONVERTER, METADATA REMOVER & OCR</span>
                         </div>
-                        <span class="text-[10px] font-mono opacity-50">FILE DROP & CTRL+V PASTE SUPPORTED</span>
                     </div>
                     
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div class="space-y-4 font-mono text-xs">
-                            <div id="img-drop-area" tabindex="0" onclick="document.getElementById('img-file').click()" class="border-2 border-dashed border-brandBorder p-8 text-center cursor-pointer hover:border-brandLight transition focus:outline-none relative">
+                            <div id="img-drop-area" tabindex="0" onclick="document.getElementById('img-file').click()" class="border-2 border-dashed border-brandBorder p-6 lg:p-8 text-center cursor-pointer hover:border-brandLight transition focus:outline-none relative">
                                 <i class="fa-solid fa-cloud-arrow-up text-3xl mb-2 opacity-60"></i>
-                                <p class="font-bold">DROP IMAGE OR PRESS CTRL+V TO PASTE</p>
+                                <p class="font-bold">DROP IMAGE, CLICK, OR PASTE</p>
                                 <span class="text-[10px] opacity-60">PNG, JPG, WEBP SUPPORTED</span>
                                 <input type="file" id="img-file" accept="image/*" onchange="handleImageUpload(event)" class="hidden">
                             </div>
                             
-                            <!-- Privacy Tracker Badge -->
                             <div id="img-privacy-status" class="border border-brandBorder p-2 text-center bg-brandDark/40 flex items-center justify-center space-x-2">
                                 <span class="opacity-60 text-[10px]">PRIVACY STATUS: AWAITING IMAGE</span>
                             </div>
@@ -636,18 +750,18 @@
                             </div>
 
                             <div class="flex flex-col space-y-2 pt-1">
-                                <div class="flex space-x-2">
-                                    <button onclick="processImage()" class="flex-1 editorial-btn py-2 font-display text-xs uppercase">PROCESS CONVERT</button>
-                                    <button onclick="runOCRInline()" class="flex-1 editorial-btn-outline py-2 font-mono text-xs uppercase"><i class="fa-solid fa-font mr-1"></i> EXTRACT OCR TEXT</button>
+                                <div class="flex flex-col sm:flex-row gap-2">
+                                    <button onclick="processImage()" class="flex-1 editorial-btn py-2 font-display text-xs uppercase">CONVERT</button>
+                                    <button onclick="runOCRInline()" class="flex-1 editorial-btn-outline py-2 font-mono text-xs uppercase"><i class="fa-solid fa-font mr-1"></i> EXTRACT TEXT</button>
                                 </div>
-                                <button onclick="removeImageMetadata()" class="w-full border border-rose-500/50 text-rose-400 hover:bg-rose-500 hover:text-white transition py-2 font-mono text-xs uppercase font-bold"><i class="fa-solid fa-shield-halved mr-1"></i> METADATA REMOVER (EXIF CLEAN)</button>
+                                <button onclick="removeImageMetadata()" class="w-full border border-rose-500/50 text-rose-400 hover:bg-rose-500 hover:text-white transition py-2 font-mono text-xs uppercase font-bold"><i class="fa-solid fa-shield-halved mr-1"></i> REMOVE EXIF DATA</button>
                             </div>
                         </div>
 
                         <div class="space-y-3 font-mono text-xs">
-                            <div class="border border-brandBorder p-3 min-h-[160px] flex items-center justify-center">
+                            <div class="border border-brandBorder p-3 min-h-[160px] flex items-center justify-center bg-brandDark/40">
                                 <img id="img-preview" class="max-h-40 max-w-full object-contain hidden" alt="Preview">
-                                <span id="img-placeholder" class="opacity-60 text-[11px]">No image loaded or pasted</span>
+                                <span id="img-placeholder" class="opacity-60 text-[11px]">No image loaded</span>
                             </div>
 
                             <div class="space-y-1">
@@ -658,13 +772,108 @@
                                 <textarea id="ocr-result" readonly placeholder="Text extracted from image will appear here..." class="w-full h-24 bg-transparent border border-brandBorder p-2 text-xs font-mono focus:outline-none resize-none"></textarea>
                             </div>
 
-                            <a id="img-download-btn" class="hidden editorial-btn w-full text-center py-2 text-xs font-display uppercase block">DOWNLOAD CONVERTED IMAGE</a>
+                            <a id="img-download-btn" class="hidden editorial-btn w-full text-center py-2 text-xs font-display uppercase block">DOWNLOAD IMAGE</a>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- TOOL 6: Offline QR Generator -->
+            <!-- TOOL 6: DOCUMENT CONVERTER -->
+            <div id="ttab-doc" class="toolkit-sub-tab space-y-6 hidden">
+                <div class="editorial-card space-y-4">
+                    <div class="flex items-center space-x-2 text-xs font-mono opacity-60 border-b border-brandBorder pb-2">
+                        <i class="fa-solid fa-file-pdf text-xs"></i>
+                        <span>DOCUMENT FILE CONVERTER (PDF ↔ WORD)</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 font-mono text-xs">
+                        <div class="space-y-3 border border-brandBorder p-4 lg:p-5">
+                            <span class="font-bold block uppercase flex items-center justify-between">
+                                <span>PDF TO DOCX</span>
+                                <i class="fa-solid fa-file-word text-sm opacity-60"></i>
+                            </span>
+                            <div id="pdf-drop-area" onclick="document.getElementById('pdf-file-input').click()" class="border border-dashed border-brandBorder p-6 text-center cursor-pointer hover:border-brandLight transition overflow-hidden">
+                                <i class="fa-solid fa-file-pdf text-2xl mb-1 opacity-60"></i>
+                                <div id="pdf-file-name" class="font-bold truncate px-2">DROP OR CLICK PDF</div>
+                                <input type="file" id="pdf-file-input" accept=".pdf" onchange="handleDocFileSelect({target: {files: event.target.files}}, 'pdf')" class="hidden">
+                            </div>
+                            <button onclick="convertPdfToDoc()" class="editorial-btn w-full py-2.5 font-display text-xs uppercase">CONVERT TO DOCX</button>
+                        </div>
+
+                        <div class="space-y-3 border border-brandBorder p-4 lg:p-5">
+                            <span class="font-bold block uppercase flex items-center justify-between">
+                                <span>WORD TO PDF</span>
+                                <i class="fa-solid fa-file-pdf text-sm opacity-60"></i>
+                            </span>
+                            <div id="word-drop-area" onclick="document.getElementById('word-file-input').click()" class="border border-dashed border-brandBorder p-6 text-center cursor-pointer hover:border-brandLight transition overflow-hidden">
+                                <i class="fa-solid fa-file-word text-2xl mb-1 opacity-60"></i>
+                                <div id="word-file-name" class="font-bold truncate px-2">DROP OR CLICK WORD</div>
+                                <input type="file" id="word-file-input" accept=".doc,.docx" onchange="handleDocFileSelect({target: {files: event.target.files}}, 'word')" class="hidden">
+                            </div>
+                            <button onclick="convertWordToPdf()" class="editorial-btn-outline w-full py-2.5 font-mono text-xs uppercase font-bold">CONVERT TO PDF</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TOOL: PDF BATCH ORGANIZER -->
+            <div id="ttab-pdforg" class="toolkit-sub-tab space-y-6 hidden">
+                <div class="editorial-card space-y-4">
+                    <div class="flex items-center space-x-2 text-xs font-mono opacity-60 border-b border-brandBorder pb-2">
+                        <i class="fa-solid fa-file-pdf text-xs"></i>
+                        <span>PDF BATCH ORGANIZER (MERGE, REORDER, ROTATE)</span>
+                    </div>
+
+                    <div class="font-mono text-xs space-y-4">
+                        <div id="pdforg-drop-area" onclick="document.getElementById('pdforg-file-input').click()" class="border-2 border-dashed border-brandBorder p-6 lg:p-8 text-center cursor-pointer hover:border-brandLight transition focus:outline-none relative">
+                            <i class="fa-solid fa-layer-group text-3xl mb-2 opacity-60"></i>
+                            <p class="font-bold">DROP MULTIPLE PDF FILES HERE TO BATCH</p>
+                            <span class="text-[10px] opacity-60">All processing happens locally</span>
+                            <input type="file" id="pdforg-file-input" accept=".pdf" multiple onchange="handlePdfOrgUpload(event)" class="hidden">
+                        </div>
+
+                        <div class="border border-brandBorder p-3 lg:p-4 bg-brandDark/40">
+                            <div class="flex justify-between items-center mb-3">
+                                <h3 class="font-bold uppercase">Workspace Sequence</h3>
+                                <button onclick="clearPdfWorkspace()" class="opacity-60 hover:text-rose-400">CLEAR ALL</button>
+                            </div>
+                            <div id="pdforg-workspace" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 max-h-64 overflow-y-auto pr-2">
+                                <div class="col-span-full text-center py-4 opacity-50 text-[10px]">No PDFs loaded in workspace.</div>
+                            </div>
+                        </div>
+                        <button onclick="exportPdfBatch()" class="editorial-btn w-full py-3 font-display text-xs uppercase">MERGE & EXPORT FINAL PDF</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TOOL: URL CLEANER -->
+            <div id="ttab-url" class="toolkit-sub-tab space-y-6 hidden">
+                <div class="editorial-card space-y-4">
+                    <div class="flex items-center space-x-2 text-xs font-mono opacity-60 border-b border-brandBorder pb-2">
+                        <i class="fa-solid fa-link-slash text-xs"></i>
+                        <span>URL PRIVACY CLEANER</span>
+                    </div>
+
+                    <div class="font-mono text-xs space-y-4">
+                        <p class="opacity-60 text-[11px] max-w-2xl">Removes tracking parameters (utm_source, fbclid, gclid, etc.) from any URL. Perfect for sharing clean, privacy-friendly links.</p>
+                        <div>
+                            <label class="block opacity-60 uppercase mb-1">DIRTY URL</label>
+                            <input type="url" id="url-input" placeholder="https://example.com?utm_source=facebook&fbclid=12345" class="w-full bg-transparent border border-brandBorder p-3 focus:outline-none">
+                        </div>
+                        <button onclick="cleanUrl()" class="editorial-btn w-full py-2 font-display uppercase">CLEAN TRACKERS</button>
+                        
+                        <div class="pt-2">
+                            <div class="flex justify-between items-center">
+                                <label class="block opacity-60 uppercase mb-1">CLEANED URL</label>
+                                <button onclick="copyToClipboard('url-output')" class="hover:opacity-100 text-[10px]"><i class="fa-regular fa-copy"></i> COPY</button>
+                            </div>
+                            <input type="text" id="url-output" readonly class="w-full bg-brandDark/40 border border-brandBorder p-3 focus:outline-none text-green-400 font-bold truncate">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TOOL 7: Offline QR Generator -->
             <div id="ttab-qr" class="toolkit-sub-tab space-y-6 hidden">
                 <div class="editorial-card space-y-4">
                     <div class="flex items-center space-x-2 text-xs font-mono opacity-60 border-b border-brandBorder pb-2">
@@ -680,7 +889,6 @@
                             </div>
                             <button onclick="generateQRCode()" class="editorial-btn w-full py-2 font-display uppercase text-xs">GENERATE QR</button>
                         </div>
-
                         <div class="flex flex-col items-center justify-center border border-brandBorder p-6 space-y-3">
                             <div id="qrcode-box" class="p-3 bg-white rounded"></div>
                             <span class="text-[10px] opacity-60">100% Client-side Offline QR</span>
@@ -689,89 +897,32 @@
                 </div>
             </div>
 
-            <!-- TOOL 7: Actual Document Converter (PDF ↔ Word/DOCX) -->
-            <div id="ttab-doc" class="toolkit-sub-tab space-y-6 hidden">
-                <div class="editorial-card space-y-4">
-                    <div class="flex items-center space-x-2 text-xs font-mono opacity-60 border-b border-brandBorder pb-2">
-                        <i class="fa-solid fa-file-pdf text-xs"></i>
-                        <span>DOCUMENT FILE CONVERTER (PDF ↔ WORD)</span>
-                    </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 font-mono text-xs">
-                        <!-- PDF to WORD -->
-                        <div class="space-y-3 border border-brandBorder p-5">
-                            <span class="font-bold block uppercase flex items-center justify-between">
-                                <span>PDF TO WORD / DOCX</span>
-                                <i class="fa-solid fa-file-word text-sm opacity-60"></i>
-                            </span>
-                            <p class="opacity-60 text-[11px]">Convert PDF document into editable Word document.</p>
-                            
-                            <div onclick="document.getElementById('pdf-file-input').click()" class="border border-dashed border-brandBorder p-6 text-center cursor-pointer hover:border-brandLight transition">
-                                <i class="fa-solid fa-file-pdf text-2xl mb-1 opacity-60"></i>
-                                <div id="pdf-file-name" class="font-bold truncate">CLICK TO CHOOSE PDF FILE</div>
-                                <input type="file" id="pdf-file-input" accept=".pdf" onchange="handleDocFileSelect(event, 'pdf')" class="hidden">
-                            </div>
-
-                            <button onclick="convertPdfToDoc()" class="editorial-btn w-full py-2.5 font-display text-xs uppercase">CONVERT TO WORD DOCX</button>
-                        </div>
-
-                        <!-- WORD to PDF -->
-                        <div class="space-y-3 border border-brandBorder p-5">
-                            <span class="font-bold block uppercase flex items-center justify-between">
-                                <span>WORD / DOCX TO PDF</span>
-                                <i class="fa-solid fa-file-pdf text-sm opacity-60"></i>
-                            </span>
-                            <p class="opacity-60 text-[11px]">Convert Word DOC/DOCX documents to PDF format.</p>
-
-                            <div onclick="document.getElementById('word-file-input').click()" class="border border-dashed border-brandBorder p-6 text-center cursor-pointer hover:border-brandLight transition">
-                                <i class="fa-solid fa-file-word text-2xl mb-1 opacity-60"></i>
-                                <div id="word-file-name" class="font-bold truncate">CLICK TO CHOOSE WORD FILE</div>
-                                <input type="file" id="word-file-input" accept=".doc,.docx" onchange="handleDocFileSelect(event, 'word')" class="hidden">
-                            </div>
-
-                            <button onclick="convertWordToPdf()" class="editorial-btn-outline w-full py-2.5 font-mono text-xs uppercase">CONVERT TO PDF</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
         </div>
 
         <!-- ========================================== -->
-        <!-- 3. MEDIA VIEW -->
+        <!-- 3. RESOURCES VIEW -->
         <!-- ========================================== -->
-        <div id="view-media" class="space-y-8 hidden transition-opacity duration-300">
-            
-            <div class="border-b border-brandBorder pb-6 flex flex-col md:flex-row md:items-end justify-between gap-4">
+        <div id="view-media" class="space-y-6 lg:space-y-8 hidden transition-opacity duration-300">
+            <div class="border-b border-brandBorder pb-4 lg:pb-6 flex flex-col md:flex-row md:items-end justify-between gap-4">
                 <div class="space-y-1">
                     <div class="flex items-center space-x-2 text-xs font-mono opacity-60">
-                        <i class="fa-solid fa-link text-xs"></i>
-                        <span>MEDIA REPOSITORY</span>
+                        <i class="fa-solid fa-folder-open text-xs"></i>
+                        <span>RESOURCES REPOSITORY</span>
                     </div>
-                    <h1 class="font-display text-4xl sm:text-5xl uppercase" data-i18n="nav_media">MEDIA</h1>
+                    <h1 class="font-display text-4xl sm:text-5xl uppercase" data-i18n="nav_media">RESOURCES</h1>
                 </div>
-
-                <div class="flex items-center space-x-3">
-                    <input type="text" id="media-search" oninput="renderMedia()" placeholder="Search links..." class="bg-transparent border border-brandBorder px-3 py-2 text-xs font-mono focus:outline-none focus:border-brandLight w-44">
-                    <button onclick="openModal('add-media-modal')" class="editorial-btn px-4 py-2 text-xs font-mono uppercase font-bold flex items-center space-x-2">
-                        <i class="fa-solid fa-plus text-xs"></i>
-                        <span data-i18n="add_media">ADD MEDIA</span>
-                    </button>
+                <div class="flex items-center w-full md:w-auto">
+                    <input type="text" id="media-search" oninput="renderMedia()" placeholder="Search links..." class="bg-transparent border border-brandBorder px-3 py-2 text-xs font-mono focus:outline-none focus:border-brandLight w-full md:w-48">
                 </div>
             </div>
-
-            <div id="media-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- Dynamic items -->
-            </div>
-
+            <div id="media-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6"></div>
         </div>
 
         <!-- ========================================== -->
         <!-- 4. PROJECTS VIEW -->
         <!-- ========================================== -->
-        <div id="view-projects" class="space-y-8 hidden transition-opacity duration-300">
-            
-            <div class="border-b border-brandBorder pb-6 flex flex-col md:flex-row md:items-end justify-between gap-4">
+        <div id="view-projects" class="space-y-6 lg:space-y-8 hidden transition-opacity duration-300">
+            <div class="border-b border-brandBorder pb-4 lg:pb-6 flex flex-col md:flex-row md:items-end justify-between gap-4">
                 <div class="space-y-1">
                     <div class="flex items-center space-x-2 text-xs font-mono opacity-60">
                         <i class="fa-solid fa-box text-xs"></i>
@@ -779,24 +930,11 @@
                     </div>
                     <h1 class="font-display text-4xl sm:text-5xl uppercase" data-i18n="nav_projects">PROJECTS</h1>
                 </div>
-
-                <button onclick="openModal('add-project-modal')" class="editorial-btn px-4 py-2 text-xs font-mono uppercase font-bold flex items-center space-x-2">
-                    <i class="fa-solid fa-plus text-xs"></i>
-                    <span data-i18n="add_project">NEW PROJECT</span>
-                </button>
             </div>
-
-            <div id="projects-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- Dynamic project cards -->
-            </div>
-
+            <div id="projects-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6"></div>
         </div>
 
     </main>
-
-    <!-- ========================================== -->
-    <!-- MODALS & SETTINGS PANEL -->
-    <!-- ========================================== -->
 
     <!-- Settings Modal -->
     <div id="settings-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
@@ -808,9 +946,7 @@
                 </div>
                 <button onclick="closeModal('settings-modal')" class="opacity-60 hover:opacity-100 text-sm font-mono"><i class="fa-solid fa-xmark"></i></button>
             </div>
-
             <div class="space-y-5 font-mono text-xs">
-                <!-- Font & Layout Scale -->
                 <div class="space-y-2 border-b border-brandBorder pb-3">
                     <span class="font-bold block" data-i18n="font_size">FONT SIZE</span>
                     <div class="grid grid-cols-3 gap-2">
@@ -819,20 +955,6 @@
                         <button onclick="setFontSize('18px')" class="editorial-btn-outline py-1 text-[11px]">LARGE</button>
                     </div>
                 </div>
-
-                <!-- International Language Switcher -->
-                <div class="space-y-2 border-b border-brandBorder pb-3">
-                    <div class="flex justify-between items-center mb-1">
-                        <span class="font-bold block" data-i18n="language">LANGUAGE</span>
-                        <span class="text-[10px] opacity-60">INTERNATIONAL</span>
-                    </div>
-                    
-                    <div class="grid grid-cols-1 gap-2" id="lang-grid">
-                        <button type="button" onclick="changeLanguage('en')" id="lang-btn-en" class="lang-btn active">ENGLISH</button>
-                    </div>
-                </div>
-
-                <!-- Reset Data -->
                 <div class="pt-1">
                     <button onclick="resetAllData()" class="w-full border border-rose-500/50 text-rose-400 hover:bg-rose-500 hover:text-white transition py-2 font-mono text-xs uppercase">
                         <i class="fa-solid fa-triangle-exclamation mr-1"></i> RESET LOCAL STORAGE DATA
@@ -842,166 +964,46 @@
         </div>
     </div>
 
-    <!-- Add Bookmark Modal -->
-    <div id="add-bm-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-        <div class="editorial-card w-full max-w-md p-6 bg-brandDark space-y-4">
-            <div class="flex items-center justify-between border-b border-brandBorder pb-3">
-                <span class="font-display text-lg uppercase" data-i18n="add_bm">ADD NEW BOOKMARK</span>
-                <button onclick="closeModal('add-bm-modal')" class="opacity-60 hover:opacity-100 text-sm font-mono"><i class="fa-solid fa-xmark"></i></button>
-            </div>
-            <form onsubmit="saveBookmark(event)" class="space-y-4 font-mono text-xs">
-                <div>
-                    <label class="block opacity-60 uppercase mb-1">TITLE</label>
-                    <input type="text" id="bm-title" required placeholder="e.g. GitHub" class="w-full bg-transparent border border-brandBorder p-2.5 focus:outline-none">
-                </div>
-                <div>
-                    <label class="block opacity-60 uppercase mb-1">URL</label>
-                    <input type="url" id="bm-url" required placeholder="https://..." class="w-full bg-transparent border border-brandBorder p-2.5 focus:outline-none">
-                </div>
-                <div>
-                    <label class="block opacity-60 uppercase mb-1">CATEGORY</label>
-                    <input type="text" id="bm-cat" required placeholder="DEV, DESIGN, SOCIAL" class="w-full bg-transparent border border-brandBorder p-2.5 focus:outline-none">
-                </div>
-                <div class="flex justify-end space-x-2 pt-2">
-                    <button type="button" onclick="closeModal('add-bm-modal')" class="px-4 py-2 border border-brandBorder opacity-60">CANCEL</button>
-                    <button type="submit" class="editorial-btn px-5 py-2 font-display uppercase">SAVE</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- Add Media Modal -->
-    <div id="add-media-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-        <div class="editorial-card w-full max-w-md p-6 bg-brandDark space-y-4">
-            <div class="flex items-center justify-between border-b border-brandBorder pb-3">
-                <span class="font-display text-lg uppercase" data-i18n="add_media">ADD MEDIA REPOSITORY</span>
-                <button onclick="closeModal('add-media-modal')" class="opacity-60 hover:opacity-100 text-sm font-mono"><i class="fa-solid fa-xmark"></i></button>
-            </div>
-            <form onsubmit="saveMedia(event)" class="space-y-4 font-mono text-xs">
-                <div>
-                    <label class="block opacity-60 uppercase mb-1">TITLE</label>
-                    <input type="text" id="med-title" required placeholder="e.g. Beats Collection" class="w-full bg-transparent border border-brandBorder p-2.5 focus:outline-none">
-                </div>
-                <div>
-                    <label class="block opacity-60 uppercase mb-1">URL LINK</label>
-                    <input type="url" id="med-url" required placeholder="https://..." class="w-full bg-transparent border border-brandBorder p-2.5 focus:outline-none">
-                </div>
-                <div>
-                    <label class="block opacity-60 uppercase mb-1">PLATFORM</label>
-                    <input type="text" id="med-platform" placeholder="SPOTIFY, YOUTUBE, DRIVE" class="w-full bg-transparent border border-brandBorder p-2.5 focus:outline-none">
-                </div>
-                <div>
-                    <label class="block opacity-60 uppercase mb-1">DESCRIPTION</label>
-                    <input type="text" id="med-desc" placeholder="Brief notes..." class="w-full bg-transparent border border-brandBorder p-2.5 focus:outline-none">
-                </div>
-                <div class="flex justify-end space-x-2 pt-2">
-                    <button type="button" onclick="closeModal('add-media-modal')" class="px-4 py-2 border border-brandBorder opacity-60">CANCEL</button>
-                    <button type="submit" class="editorial-btn px-5 py-2 font-display uppercase">SAVE MEDIA</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- Add Project Modal -->
-    <div id="add-project-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-        <div class="editorial-card w-full max-w-md p-6 bg-brandDark space-y-4">
-            <div class="flex items-center justify-between border-b border-brandBorder pb-3">
-                <span class="font-display text-lg uppercase" data-i18n="add_project">NEW PROJECT ENTRY</span>
-                <button onclick="closeModal('add-project-modal')" class="opacity-60 hover:opacity-100 text-sm font-mono"><i class="fa-solid fa-xmark"></i></button>
-            </div>
-            <form onsubmit="saveProject(event)" class="space-y-4 font-mono text-xs">
-                <div>
-                    <label class="block opacity-60 uppercase mb-1">TITLE</label>
-                    <input type="text" id="proj-title" required placeholder="Project Name" class="w-full bg-transparent border border-brandBorder p-2.5 focus:outline-none">
-                </div>
-                <div>
-                    <label class="block opacity-60 uppercase mb-1">CATEGORY</label>
-                    <input type="text" id="proj-cat" required placeholder="WEB DEV, DESIGN" class="w-full bg-transparent border border-brandBorder p-2.5 focus:outline-none">
-                </div>
-                <div>
-                    <label class="block opacity-60 uppercase mb-1">STATUS</label>
-                    <select id="proj-status" class="w-full bg-transparent border border-brandBorder p-2.5 focus:outline-none">
-                        <option value="IN PROGRESS">IN PROGRESS</option>
-                        <option value="COMPLETED">COMPLETED</option>
-                        <option value="ARCHIVED">ARCHIVED</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block opacity-60 uppercase mb-1">URL / REPO</label>
-                    <input type="url" id="proj-url" placeholder="https://..." class="w-full bg-transparent border border-brandBorder p-2.5 focus:outline-none">
-                </div>
-                <div>
-                    <label class="block opacity-60 uppercase mb-1">DESCRIPTION</label>
-                    <textarea id="proj-desc" required placeholder="Project overview..." class="w-full h-16 bg-transparent border border-brandBorder p-2 focus:outline-none resize-none"></textarea>
-                </div>
-                <div class="flex justify-end space-x-2 pt-2">
-                    <button type="button" onclick="closeModal('add-project-modal')" class="px-4 py-2 border border-brandBorder opacity-60">CANCEL</button>
-                    <button type="submit" class="editorial-btn px-5 py-2 font-display uppercase">SAVE PROJECT</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
     <!-- Toast Notification -->
-    <div id="toast" class="fixed bottom-6 right-6 z-50 font-mono text-xs bg-brandLight text-brandDark px-4 py-3 border border-brandLight shadow-2xl opacity-0 translate-y-2 pointer-events-none transition-all duration-300">
+    <div id="toast" class="fixed bottom-6 right-6 lg:bottom-8 lg:right-8 z-50 font-mono text-xs bg-brandLight text-brandDark px-4 py-3 border border-brandLight shadow-2xl opacity-0 translate-y-2 pointer-events-none transition-all duration-300">
         Notification
     </div>
 
     <!-- Editorial Footer -->
-    <footer class="border-t border-brandBorder py-6 px-6 lg:px-12 flex flex-col sm:flex-row items-center justify-between font-mono text-xs opacity-60 gap-4">
+    <footer class="border-t border-brandBorder py-6 px-4 lg:px-12 flex flex-col sm:flex-row items-center justify-between font-mono text-xs opacity-60 gap-4 text-center sm:text-left">
         <div>NAR/DONA © 2026 // SORT & EXECUTE.</div>
-        <div class="flex space-x-6">
+        <div class="flex flex-col sm:flex-row gap-2 sm:gap-6">
             <span>SYS: ONLINE</span>
             <span>PALETTE: #1C1C1E / #F8F7F3</span>
         </div>
     </footer>
 
     <script>
-        // --- TRANSLATION DICTIONARY ---
         const translations = {
             en: {
                 nav_home: "HOME",
                 nav_toolkit: "TOOLKIT",
-                nav_media: "MEDIA",
+                nav_media: "RESOURCES",
                 nav_projects: "PROJECTS",
                 hero_tag: "PERSONAL WORKSPACE",
                 desc_toolkit: "Essential web developer utilities and file converters.",
-                desc_media: "Personal media hub and external link collection.",
+                desc_media: "Resources hub and external link collection.",
                 desc_projects: "Personal projects, active builds, and repository links.",
                 launch: "LAUNCH TOOLKIT",
-                launch_media: "OPEN MEDIA",
+                launch_media: "OPEN RESOURCES",
                 launch_projects: "VIEW CATALOG",
-                bm_tag: "QUICK ACCESS DIRECTORY",
-                bookmarks: "BOOKMARKS",
-                add_bm: "ADD BOOKMARK",
-                add_media: "ADD MEDIA",
-                add_project: "NEW PROJECT",
                 settings: "SETTINGS",
                 font_size: "FONT SIZE",
-                language: "LANGUAGE"
             }
         };
 
-        let currentLang = 'en';
-
-        function changeLanguage(lang) {
-            currentLang = 'en';
-            const btn = document.getElementById('lang-btn-en');
-            if (btn) btn.classList.add('active');
-
-            document.querySelectorAll('[data-i18n]').forEach(el => {
-                const key = el.getAttribute('data-i18n');
-                if (translations.en && translations.en[key]) {
-                    el.innerText = translations.en[key];
-                }
-            });
-        }
-
-        // --- FONT SIZE CONTROLS ---
         function initTheme() {
             const savedSize = localStorage.getItem('nd_font_size') || '16px';
             setFontSize(savedSize);
-            changeLanguage('en');
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations.en && translations.en[key]) el.innerText = translations.en[key];
+            });
         }
 
         function setFontSize(size) {
@@ -1016,126 +1018,171 @@
             }
         }
 
-        // --- NAVIGATION & VIEW SWITCHING ---
         function switchView(viewName) {
             ['home', 'toolkit', 'media', 'projects'].forEach(v => {
                 const el = document.getElementById(`view-${v}`);
                 const navBtn = document.getElementById(`nav-${v}`);
                 if (v === viewName) {
                     el.classList.remove('hidden');
-                    navBtn.classList.add('active-tab-nav');
+                    if(navBtn) navBtn.classList.add('active-tab-nav');
                 } else {
                     el.classList.add('hidden');
-                    navBtn.classList.remove('active-tab-nav');
+                    if(navBtn) navBtn.classList.remove('active-tab-nav');
                 }
             });
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // --- REALTIME CLOCK ---
         function updateClock() {
             const now = new Date();
-            document.getElementById('header-time').innerText = now.toTimeString().split(' ')[0];
-            const options = { weekday: 'short', month: 'short', day: '2-digit', year: 'numeric' };
-            document.getElementById('header-date').innerText = now.toLocaleDateString('en-US', options).toUpperCase();
+            const timeEl = document.getElementById('header-time');
+            const dateEl = document.getElementById('header-date');
+            if(timeEl) timeEl.innerText = now.toTimeString().split(' ')[0];
+            if(dateEl) {
+                const options = { weekday: 'short', month: 'short', day: '2-digit', year: 'numeric' };
+                dateEl.innerText = now.toLocaleDateString('en-US', options).toUpperCase();
+            }
         }
         setInterval(updateClock, 1000);
         updateClock();
 
-        // --- UTILITY HELPERS ---
         function openModal(id) { document.getElementById(id).classList.remove('hidden'); }
         function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
-
         function showToast(msg) {
             const toast = document.getElementById('toast');
             toast.innerText = msg;
             toast.classList.remove('opacity-0', 'translate-y-2');
             setTimeout(() => { toast.classList.add('opacity-0', 'translate-y-2'); }, 2500);
         }
-
         function copyToClipboard(elementId) {
             const text = document.getElementById(elementId).value;
             navigator.clipboard.writeText(text);
             showToast('COPIED TO CLIPBOARD');
         }
-
         function copyToClipboardText(text) {
             navigator.clipboard.writeText(text);
             showToast('COPIED TO CLIPBOARD');
         }
+        function downloadBlob(blob, filename) {
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = filename;
+            link.click();
+        }
 
-        // --- BOOKMARKS ---
-        let bookmarks = JSON.parse(localStorage.getItem('nd_bookmarks')) || [
-            { title: 'GITHUB', url: 'https://github.com', cat: 'DEV' },
-            { title: 'FIGMA', url: 'https://figma.com', cat: 'DESIGN' },
-            { title: 'NOTION', url: 'https://notion.so', cat: 'WORK' }
-        ];
+        function getActiveFileTool() {
+            if (document.getElementById('view-toolkit').classList.contains('hidden')) return null;
+            const tools = ['ttab-meta', 'ttab-img', 'ttab-doc', 'ttab-pdforg', 'ttab-crypto'];
+            for (let t of tools) {
+                if (!document.getElementById(t).classList.contains('hidden')) return t;
+            }
+            return null;
+        }
 
-        function renderBookmarks() {
-            const grid = document.getElementById('bookmark-grid');
-            const search = document.getElementById('bm-search').value.toLowerCase();
-            grid.innerHTML = '';
+        function routeFileDrop(files) {
+            const active = getActiveFileTool();
+            if (!active) return;
+            const fakeEvent = { target: { files: files } };
+            
+            if (active === 'ttab-meta') {
+                document.getElementById('meta-file-input').files = files;
+                scanFileMetadata(fakeEvent);
+            } else if (active === 'ttab-img') {
+                document.getElementById('img-file').files = files;
+                handleImageUpload(fakeEvent);
+            } else if (active === 'ttab-pdforg') {
+                document.getElementById('pdforg-file-input').files = files;
+                handlePdfOrgUpload(fakeEvent);
+            } else if (active === 'ttab-crypto') {
+                document.getElementById('crypto-file-input').files = files;
+                handleCryptoFileSelect(fakeEvent);
+            } else if (active === 'ttab-doc') {
+                const ext = files[0].name.split('.').pop().toLowerCase();
+                if (ext === 'pdf') {
+                    document.getElementById('pdf-file-input').files = files;
+                    handleDocFileSelect(fakeEvent, 'pdf');
+                } else {
+                    document.getElementById('word-file-input').files = files;
+                    handleDocFileSelect(fakeEvent, 'word');
+                }
+            }
+        }
 
-            const filtered = bookmarks.filter(b => b.title.toLowerCase().includes(search) || b.cat.toLowerCase().includes(search));
+        document.addEventListener('DOMContentLoaded', () => {
+            const dropZones = [
+                { id: 'meta-drop-area', inputId: 'meta-file-input', handler: scanFileMetadata },
+                { id: 'img-drop-area', inputId: 'img-file', handler: handleImageUpload },
+                { id: 'pdf-drop-area', inputId: 'pdf-file-input', handler: (e) => handleDocFileSelect(e, 'pdf') },
+                { id: 'word-drop-area', inputId: 'word-file-input', handler: (e) => handleDocFileSelect(e, 'word') },
+                { id: 'pdforg-drop-area', inputId: 'pdforg-file-input', handler: handlePdfOrgUpload },
+                { id: 'crypto-drop-area', inputId: 'crypto-file-input', handler: handleCryptoFileSelect }
+            ];
 
-            filtered.forEach((bm, index) => {
-                const card = document.createElement('div');
-                card.className = 'group editorial-card flex flex-col justify-between h-28';
-                card.innerHTML = `
-                    <div class="flex items-center justify-between">
-                        <span class="text-[10px] font-mono border border-brandBorder px-1.5 py-0.5 opacity-60">${bm.cat}</span>
-                        <button onclick="deleteBookmark(${index})" class="opacity-0 group-hover:opacity-100 transition text-xs hover:text-rose-400"><i class="fa-solid fa-trash"></i></button>
-                    </div>
-                    <a href="${bm.url}" target="_blank" class="block">
-                        <div class="font-display text-lg uppercase tracking-tight truncate">${bm.title}</div>
-                        <div class="text-[10px] font-mono opacity-60 truncate">${bm.url.replace('https://', '').replace('http://', '')}</div>
-                    </a>
-                `;
-                grid.appendChild(card);
+            dropZones.forEach(zone => {
+                const el = document.getElementById(zone.id);
+                if(!el) return;
+                el.addEventListener('dragover', (e) => { e.preventDefault(); el.classList.add('border-brandLight'); });
+                el.addEventListener('dragleave', (e) => { e.preventDefault(); el.classList.remove('border-brandLight'); });
+                el.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    el.classList.remove('border-brandLight');
+                    if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+                        document.getElementById(zone.inputId).files = e.dataTransfer.files;
+                        zone.handler({ target: { files: e.dataTransfer.files } });
+                    }
+                });
             });
 
-            localStorage.setItem('nd_bookmarks', JSON.stringify(bookmarks));
-        }
-
-        function saveBookmark(e) {
-            e.preventDefault();
-            bookmarks.push({
-                title: document.getElementById('bm-title').value.toUpperCase(),
-                url: document.getElementById('bm-url').value,
-                cat: document.getElementById('bm-cat').value.toUpperCase()
-            });
-            renderBookmarks();
-            closeModal('add-bm-modal');
-            e.target.reset();
-            showToast('BOOKMARK SAVED');
-        }
-
-        function deleteBookmark(index) {
-            bookmarks.splice(index, 1);
-            renderBookmarks();
-            showToast('REMOVED');
-        }
-
-        renderBookmarks();
-
-        // --- TOOLKIT CONTROLS ---
-        function switchToolTab(tab) {
-            document.querySelectorAll('.toolkit-sub-tab').forEach(el => el.classList.add('hidden'));
-            document.getElementById(`ttab-${tab}`).classList.remove('hidden');
-
-            ['encode', 'passhash', 'color', 'meta', 'img', 'qr', 'doc'].forEach(t => {
-                const btn = document.getElementById(`ttab-btn-${t}`);
-                if (btn) {
-                    if (t === tab) {
-                        btn.className = 'px-4 py-2 border border-brandLight bg-brandLight text-brandDark font-bold';
-                    } else {
-                        btn.className = 'px-4 py-2 border border-brandBorder opacity-60 hover:opacity-100';
+            let dragCounter = 0;
+            document.addEventListener('dragenter', (e) => {
+                e.preventDefault();
+                if (getActiveFileTool()) {
+                    dragCounter++;
+                    if (dragCounter === 1) {
+                        const overlay = document.getElementById('global-drag-overlay');
+                        overlay.classList.remove('hidden');
+                        overlay.classList.add('flex');
                     }
                 }
             });
+            document.addEventListener('dragleave', (e) => {
+                e.preventDefault();
+                if (getActiveFileTool()) {
+                    dragCounter--;
+                    if (dragCounter === 0) {
+                        const overlay = document.getElementById('global-drag-overlay');
+                        overlay.classList.add('hidden');
+                        overlay.classList.remove('flex');
+                    }
+                }
+            });
+            document.addEventListener('dragover', (e) => e.preventDefault());
+            document.addEventListener('drop', (e) => {
+                e.preventDefault();
+                dragCounter = 0;
+                const overlay = document.getElementById('global-drag-overlay');
+                overlay.classList.add('hidden');
+                overlay.classList.remove('flex');
+                if (e.dataTransfer.files && e.dataTransfer.files.length > 0) routeFileDrop(e.dataTransfer.files);
+            });
+        });
+
+        function switchToolTab(tab) {
+            document.querySelectorAll('.toolkit-sub-tab').forEach(el => el.classList.add('hidden'));
+            const targetTab = document.getElementById(`ttab-${tab}`);
+            if(targetTab) targetTab.classList.remove('hidden');
+
+            ['encode', 'json', 'passhash', 'crypto', 'color', 'meta', 'img', 'doc', 'pdforg', 'url', 'qr'].forEach(t => {
+                const btn = document.getElementById(`ttab-btn-${t}`);
+                if (btn) {
+                    if (t === tab) btn.className = 'px-3 py-1.5 border border-brandLight bg-brandLight text-brandDark font-bold whitespace-nowrap transition-colors';
+                    else btn.className = 'px-3 py-1.5 border border-brandBorder opacity-60 hover:opacity-100 whitespace-nowrap transition-colors';
+                }
+            });
+            const btnContainer = document.getElementById(`ttab-btn-${tab}`)?.parentElement;
+            if(btnContainer) btnContainer.scrollLeft = document.getElementById(`ttab-btn-${tab}`).offsetLeft - 20;
         }
 
-        // TOOL 1: Encoder / Decoder
         let encDirection = 'encode';
         function setEncDirection(dir) {
             encDirection = dir;
@@ -1143,49 +1190,49 @@
             document.getElementById('btn-dec-dir').className = dir === 'decode' ? 'px-3 py-1.5 border border-brandLight bg-brandLight text-brandDark font-bold' : 'px-3 py-1.5 border border-brandBorder opacity-60';
             processEncoder();
         }
-
         function processEncoder() {
             const input = document.getElementById('enc-input').value;
             const type = document.getElementById('enc-type').value;
             const output = document.getElementById('enc-output');
-
             try {
-                if (type === 'base64') {
-                    output.value = encDirection === 'encode' ? btoa(input) : atob(input);
-                } else if (type === 'url') {
-                    output.value = encDirection === 'encode' ? encodeURIComponent(input) : decodeURIComponent(input);
-                } else if (type === 'html') {
-                    if (encDirection === 'encode') {
-                        output.value = input.replace(/[\u00A0-\u9999<>\&]/g, i => '&#'+i.charCodeAt(0)+';');
-                    } else {
-                        const doc = new DOMParser().parseFromString(input, 'text/html');
-                        output.value = doc.documentElement.textContent;
-                    }
+                if (type === 'base64') output.value = encDirection === 'encode' ? btoa(input) : atob(input);
+                else if (type === 'url') output.value = encDirection === 'encode' ? encodeURIComponent(input) : decodeURIComponent(input);
+                else if (type === 'html') {
+                    if (encDirection === 'encode') output.value = input.replace(/[\u00A0-\u9999<>\&]/g, i => '&#'+i.charCodeAt(0)+';');
+                    else output.value = new DOMParser().parseFromString(input, 'text/html').documentElement.textContent;
                 }
-            } catch (e) {
-                output.value = '// CONVERSION ERROR';
+            } catch (e) { output.value = '// CONVERSION ERROR'; }
+        }
+
+        function formatJSON() {
+            const input = document.getElementById('json-input').value;
+            const output = document.getElementById('json-output');
+            const status = document.getElementById('json-status');
+            if(!input.trim()) return;
+            try {
+                const parsed = JSON.parse(input);
+                output.value = JSON.stringify(parsed, null, 4);
+                status.innerText = "VALID JSON";
+                status.className = "text-[10px] font-bold text-green-400";
+                showToast("JSON FORMATTED");
+            } catch(e) {
+                output.value = "";
+                status.innerText = "ERROR: " + e.message;
+                status.className = "text-[10px] font-bold text-rose-400";
             }
         }
 
-        // TOOL 2: Password & Hashes
         function generatePassword() {
             const len = document.getElementById('pass-len').value;
-            const num = document.getElementById('pass-num').checked;
-            const sym = document.getElementById('pass-sym').checked;
-            const upper = document.getElementById('pass-upper').checked;
-            const lower = document.getElementById('pass-lower').checked;
-
-            let chars = '';
-            if (lower) chars += 'abcdefghijklmnopqrstuvwxyz';
-            if (upper) chars += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-            if (num) chars += '0123456789';
-            if (sym) chars += '!@#$%^&*()_+-=[]{}|;:,.<>?';
-            if (!chars) chars = 'abcdefghijklmnopqrstuvwxyz';
+            const chars = [
+                document.getElementById('pass-lower').checked ? 'abcdefghijklmnopqrstuvwxyz' : '',
+                document.getElementById('pass-upper').checked ? 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' : '',
+                document.getElementById('pass-num').checked ? '0123456789' : '',
+                document.getElementById('pass-sym').checked ? '!@#$%^&*()_+-=[]{}|;:,.<>?' : ''
+            ].join('') || 'abcdefghijklmnopqrstuvwxyz';
 
             let res = '';
-            for (let i = 0; i < len; i++) {
-                res += chars.charAt(Math.floor(Math.random() * chars.length));
-            }
+            for (let i = 0; i < len; i++) res += chars.charAt(Math.floor(Math.random() * chars.length));
             document.getElementById('pass-result').innerText = res;
         }
         generatePassword();
@@ -1203,16 +1250,76 @@
             document.getElementById('hash-sha512').value = CryptoJS.SHA512(str).toString();
         }
 
-        // TOOL 3: COLOR TOOLS (iro.js interactive wheel)
+        let cryptoFile = null;
+        function handleCryptoFileSelect(e) {
+            cryptoFile = e.target.files[0];
+            if(cryptoFile) document.getElementById('crypto-filename').innerText = cryptoFile.name.toUpperCase();
+        }
+        async function deriveCryptoKey(password, salt) {
+            const enc = new TextEncoder();
+            const keyMaterial = await window.crypto.subtle.importKey("raw", enc.encode(password), {name: "PBKDF2"}, false, ["deriveKey"]);
+            return window.crypto.subtle.deriveKey(
+                { name: "PBKDF2", salt: salt, iterations: 100000, hash: "SHA-256" },
+                keyMaterial, { name: "AES-GCM", length: 256 }, false, ["encrypt", "decrypt"]
+            );
+        }
+        async function processCrypto(action) {
+            if(!cryptoFile) return showToast("SELECT FILE FIRST");
+            const pass = document.getElementById('crypto-pass').value;
+            if(!pass) return showToast("ENTER PASSWORD");
+            try {
+                const fileData = await cryptoFile.arrayBuffer();
+                if (action === 'encrypt') {
+                    const salt = window.crypto.getRandomValues(new Uint8Array(16));
+                    const iv = window.crypto.getRandomValues(new Uint8Array(12));
+                    const key = await deriveCryptoKey(pass, salt);
+                    const encrypted = await window.crypto.subtle.encrypt({name: "AES-GCM", iv: iv}, key, fileData);
+
+                    const bundle = new Uint8Array(salt.length + iv.length + encrypted.byteLength);
+                    bundle.set(salt, 0); bundle.set(iv, salt.length); bundle.set(new Uint8Array(encrypted), salt.length + iv.length);
+                    downloadBlob(new Blob([bundle]), cryptoFile.name + '.enc');
+                    showToast("FILE ENCRYPTED (.ENC)");
+                } else {
+                    const bundle = new Uint8Array(fileData);
+                    const salt = bundle.slice(0, 16);
+                    const iv = bundle.slice(16, 28);
+                    const data = bundle.slice(28);
+                    
+                    const key = await deriveCryptoKey(pass, salt);
+                    const decrypted = await window.crypto.subtle.decrypt({name: "AES-GCM", iv: iv}, key, data);
+                    
+                    let outName = cryptoFile.name.replace('.enc', '');
+                    if(outName === cryptoFile.name) outName = "decrypted_" + outName;
+                    downloadBlob(new Blob([decrypted]), outName);
+                    showToast("FILE DECRYPTED");
+                }
+            } catch(err) { showToast("ERROR / WRONG PASSWORD"); }
+        }
+
+        // ==========================================
+        // TOOL 3: COLOR TOOLS (UPDATED MULTI-SLIDER IN FRAME)
+        // ==========================================
         let iroColorPicker;
+        const colorPalettes = [
+            ["#1C1C1E", "#F8F7F3", "#28282B", "#FF5C5C"],
+            ["#0F172A", "#38BDF8", "#F1F5F9", "#818CF8"],
+            ["#18181B", "#14B8A6", "#E4E4E7", "#F59E0B"],
+            ["#2E222F", "#3E3546", "#625565", "#966C6C"]
+        ];
+
         document.addEventListener('DOMContentLoaded', () => {
             iroColorPicker = new iro.ColorPicker("#color-wheel-container", {
-                width: 180,
+                width: 220,
                 color: "#F8F7F3",
-                borderWidth: 1,
-                borderColor: "rgba(248, 247, 243, 0.15)",
+                borderWidth: 0,
+                handleRadius: 14,
+                sliderHeight: 14,
+                sliderMargin: 18,
+                layoutDirection: 'vertical',
                 layout: [
-                    { component: iro.ui.Wheel },
+                    { component: iro.ui.Wheel, options: { margin: 20 } },
+                    { component: iro.ui.Slider, options: { sliderType: 'hue' } },
+                    { component: iro.ui.Slider, options: { sliderType: 'saturation' } },
                     { component: iro.ui.Slider, options: { sliderType: 'value' } }
                 ]
             });
@@ -1223,89 +1330,65 @@
                 document.getElementById('clr-rgb').value = color.rgbString;
                 document.getElementById('clr-hsl').value = color.hslString;
             });
+
+            const pCont = document.getElementById('palette-container');
+            colorPalettes.forEach(group => {
+                const grpDiv = document.createElement('div');
+                grpDiv.className = "flex space-x-1 border border-brandBorder p-1 bg-brandDark/50";
+                group.forEach(c => {
+                    const btn = document.createElement('button');
+                    btn.className = "w-5 h-5 sm:w-6 sm:h-6 rounded-sm border border-brandBorder/50 hover:scale-110 transition";
+                    btn.style.backgroundColor = c;
+                    btn.onclick = () => { document.getElementById('clr-hex').value = c; applyColorFromInput('hex'); };
+                    grpDiv.appendChild(btn);
+                });
+                pCont.appendChild(grpDiv);
+            });
         });
 
         function applyColorFromInput(type) {
             try {
-                if (type === 'hex') {
-                    iroColorPicker.color.hexString = document.getElementById('clr-hex').value;
-                } else if (type === 'rgb') {
-                    iroColorPicker.color.rgbString = document.getElementById('clr-rgb').value;
-                } else if (type === 'hsl') {
-                    iroColorPicker.color.hslString = document.getElementById('clr-hsl').value;
-                }
+                if (type === 'hex') iroColorPicker.color.hexString = document.getElementById('clr-hex').value;
+                else if (type === 'rgb') iroColorPicker.color.rgbString = document.getElementById('clr-rgb').value;
+                else if (type === 'hsl') iroColorPicker.color.hslString = document.getElementById('clr-hsl').value;
                 showToast('COLOR VISUALIZED');
-            } catch (error) {
-                showToast('INVALID FORMAT');
-            }
+            } catch (error) { showToast('INVALID FORMAT'); }
         }
 
-
-        // TOOL 4: UNIVERSAL METADATA SCANNER
         function scanFileMetadata(e) {
             const file = e.target.files[0];
             if (!file) return;
 
             const out = document.getElementById('meta-output');
-            let meta = `=== METADATA SCAN RESULT ===\n`;
-            meta += `FILE NAME     : ${file.name}\n`;
-            meta += `FILE SIZE     : ${(file.size / 1024).toFixed(2)} KB (${file.size} bytes)\n`;
-            meta += `MIME TYPE     : ${file.type || 'Unknown / Binary'}\n`;
-            meta += `LAST MODIFIED : ${new Date(file.lastModified).toISOString()}\n`;
-            meta += `EXTENSION     : .${file.name.split('.').pop()}\n\n`;
-
-            meta += `=== TECHNICAL & PRIVACY INFO ===\n`;
+            let meta = `=== METADATA SCAN RESULT ===\nFILE NAME     : ${file.name}\nFILE SIZE     : ${(file.size / 1024).toFixed(2)} KB\nMIME TYPE     : ${file.type || 'Unknown'}\nLAST MODIFIED : ${new Date(file.lastModified).toISOString()}\n\n=== TECHNICAL & PRIVACY INFO ===\n`;
 
             if (file.type.startsWith('image/')) {
                 const img = new Image();
                 img.src = URL.createObjectURL(file);
                 img.onload = () => {
-                    meta += `DIMENSIONS    : ${img.width} x ${img.height} px\n`;
-                    meta += `ASPECT RATIO  : ${(img.width / img.height).toFixed(2)}\n\n`;
-                    
+                    meta += `DIMENSIONS    : ${img.width} x ${img.height} px\n\n`;
                     EXIF.getData(file, function() {
                         let tags = EXIF.getAllTags(this);
                         if (tags && Object.keys(tags).length > 0) {
                             meta += `[EXIF DATA DETECTED]\n`;
                             if (tags.Make) meta += `CAMERA MAKE   : ${tags.Make}\n`;
                             if (tags.Model) meta += `CAMERA MODEL  : ${tags.Model}\n`;
-                            if (tags.Software) meta += `SOFTWARE      : ${tags.Software}\n`;
                             if (tags.DateTimeOriginal) meta += `DATE TAKEN    : ${tags.DateTimeOriginal}\n`;
-                            
-                            // Check GPS Location mapping
                             if (tags.GPSLatitude && tags.GPSLongitude) {
-                                let lat = tags.GPSLatitude;
-                                let lon = tags.GPSLongitude;
-                                let latRef = tags.GPSLatitudeRef || "N";
-                                let lonRef = tags.GPSLongitudeRef || "E";
-                                
-                                let latDec = lat[0] + lat[1]/60 + lat[2]/3600;
-                                if (latRef === "S") latDec = latDec * -1;
-                                
-                                let lonDec = lon[0] + lon[1]/60 + lon[2]/3600;
-                                if (lonRef === "W") lonDec = lonDec * -1;
-                                
-                                meta += `\n[WARNING: LOCATION DATA FOUND]\n`;
-                                meta += `GPS LATITUDE  : ${latDec.toFixed(6)} (${latRef})\n`;
-                                meta += `GPS LONGITUDE : ${lonDec.toFixed(6)} (${lonRef})\n`;
-                                meta += `MAPS LINK     : https://www.google.com/maps?q=${latDec},${lonDec}\n`;
+                                meta += `\n[WARNING: LOCATION DATA FOUND]\nGPS LAT/LON DETECTED. HIGH PRIVACY RISK.\n`;
                             }
-                        } else {
-                            meta += `[NO EXIF/PRIVACY DATA DETECTED]\n`;
-                        }
+                        } else meta += `[NO EXIF/PRIVACY DATA DETECTED]\n`;
                         out.value = meta;
                     });
                 };
             } else {
-                 meta += `Standard file - deep metadata extraction limited in browser.\nPrivacy risk generally low for non-media formats unless embedded in DOC/PDF.\n`;
+                 meta += `Standard file - deep metadata extraction limited in browser.\n`;
                  out.value = meta;
             }
             showToast('METADATA SCANNED');
         }
 
-        // TOOL 5: IMAGE TOOLS (OCR, Resize, Metadata Remover)
         let uploadedImg = null;
-
         function loadImageToCanvas(file) {
             const reader = new FileReader();
             reader.onload = (evt) => {
@@ -1317,19 +1400,14 @@
                     preview.classList.remove('hidden');
                     document.getElementById('img-placeholder').classList.add('hidden');
                     
-                    // Exif Privacy Check for the specific image tools tab
                     EXIF.getData(file, function() {
                         let tags = EXIF.getAllTags(this);
                         let hasPrivacy = tags && (tags.GPSLatitude || tags.Make || Object.keys(tags).length > 2);
                         let statusEl = document.getElementById('img-privacy-status');
                         
-                        if (hasPrivacy) {
-                            statusEl.innerHTML = `<span class="text-rose-400 font-bold"><i class="fa-solid fa-triangle-exclamation"></i> PRIVACY DATA DETECTED (EXIF)</span>`;
-                        } else {
-                            statusEl.innerHTML = `<span class="text-green-400 font-bold"><i class="fa-solid fa-check"></i> SAFE (NO EXIF DETECTED)</span>`;
-                        }
+                        if (hasPrivacy) statusEl.innerHTML = `<span class="text-rose-400 font-bold"><i class="fa-solid fa-triangle-exclamation"></i> PRIVACY DATA DETECTED (EXIF)</span>`;
+                        else statusEl.innerHTML = `<span class="text-green-400 font-bold"><i class="fa-solid fa-check"></i> SAFE (NO EXIF DETECTED)</span>`;
                     });
-
                     showToast('IMAGE LOADED');
                 }
             };
@@ -1345,158 +1423,199 @@
             const items = (e.clipboardData || e.originalEvent.clipboardData).items;
             for (let item of items) {
                 if (item.type.indexOf('image') === 0) {
-                    const blob = item.getAsFile();
-                    loadImageToCanvas(blob);
+                    loadImageToCanvas(item.getAsFile());
                     switchView('toolkit');
                     switchToolTab('img');
-                    showToast('IMAGE PASTED FROM CLIPBOARD');
+                    showToast('IMAGE PASTED');
                     break;
                 }
             }
         });
 
         function processImage() {
-            if (!uploadedImg) return showToast('PLEASE LOAD OR PASTE AN IMAGE');
+            if (!uploadedImg) return showToast('LOAD IMAGE FIRST');
             const canvas = document.createElement('canvas');
             canvas.width = uploadedImg.width;
             canvas.height = uploadedImg.height;
-            const ctx = canvas.getContext('2d');
-            ctx.drawImage(uploadedImg, 0, 0);
+            canvas.getContext('2d').drawImage(uploadedImg, 0, 0);
 
             const format = document.getElementById('img-target-format').value;
             const quality = parseFloat(document.getElementById('img-quality').value) / 100;
-
-            const dataUrl = canvas.toDataURL(format, quality);
-            const downloadBtn = document.getElementById('img-download-btn');
-            downloadBtn.href = dataUrl;
-            downloadBtn.download = `converted-image.${format.split('/')[1]}`;
-            downloadBtn.classList.remove('hidden');
+            const btn = document.getElementById('img-download-btn');
+            btn.href = canvas.toDataURL(format, quality);
+            btn.download = `converted.${format.split('/')[1]}`;
+            btn.classList.remove('hidden');
             showToast('IMAGE PROCESSED');
         }
 
         function removeImageMetadata() {
-            if (!uploadedImg) return showToast('PLEASE LOAD OR PASTE AN IMAGE');
-            
+            if (!uploadedImg) return showToast('LOAD IMAGE FIRST');
             const canvas = document.createElement('canvas');
             canvas.width = uploadedImg.width;
             canvas.height = uploadedImg.height;
-            const ctx = canvas.getContext('2d');
-            ctx.drawImage(uploadedImg, 0, 0);
-
-            // Exporting directly from Canvas inherently strips native EXIF metadata
-            const cleanDataUrl = canvas.toDataURL('image/jpeg', 0.95);
-            const downloadBtn = document.getElementById('img-download-btn');
-            downloadBtn.href = cleanDataUrl;
-            downloadBtn.download = `clean-no-exif-${Date.now()}.jpg`;
-            downloadBtn.classList.remove('hidden');
+            canvas.getContext('2d').drawImage(uploadedImg, 0, 0);
+            
+            const btn = document.getElementById('img-download-btn');
+            btn.href = canvas.toDataURL('image/jpeg', 0.95);
+            btn.download = `clean-no-exif-${Date.now()}.jpg`;
+            btn.classList.remove('hidden');
             showToast('EXIF METADATA STRIPPED');
         }
 
         async function runOCRInline() {
-            if (!uploadedImg) return showToast('PLEASE LOAD OR PASTE AN IMAGE');
-            const ocrResult = document.getElementById('ocr-result');
-            ocrResult.value = 'Extracting text...';
-
+            if (!uploadedImg) return showToast('LOAD IMAGE FIRST');
+            const res = document.getElementById('ocr-result');
+            res.value = 'Extracting text...';
             try {
                 const worker = await Tesseract.createWorker('eng');
                 const ret = await worker.recognize(uploadedImg.src);
-                ocrResult.value = ret.data.text;
+                res.value = ret.data.text;
                 await worker.terminate();
-                showToast('OCR EXTRACTION COMPLETE');
-            } catch (err) {
-                ocrResult.value = '// OCR Failed';
-                showToast('OCR FAILED');
-            }
+                showToast('OCR COMPLETE');
+            } catch (err) { res.value = '// OCR Failed'; }
         }
 
-        // TOOL 6: Offline QR Code Generator
+        let selectedPdfFile = null; let selectedWordFile = null;
+        function handleDocFileSelect(e, type) {
+            const file = e.target.files[0];
+            if (!file) return;
+            if (type === 'pdf') {
+                selectedPdfFile = file;
+                document.getElementById('pdf-file-name').innerText = file.name.toUpperCase();
+            } else if (type === 'word') {
+                selectedWordFile = file;
+                document.getElementById('word-file-name').innerText = file.name.toUpperCase();
+            }
+        }
+        async function convertPdfToDoc() {
+            if (!selectedPdfFile) return showToast('SELECT PDF FIRST');
+            showToast('PROCESSING...');
+            const reader = new FileReader();
+            reader.onload = async function() {
+                const typedarray = new Uint8Array(this.result);
+                const pdfDoc = await PDFLib.PDFDocument.load(typedarray);
+                let content = `CONVERTED FROM: ${selectedPdfFile.name}\nPAGES: ${pdfDoc.getPageCount()}\n\n[Placeholder extraction via client-side]`;
+                downloadBlob(new Blob([content], {type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'}), selectedPdfFile.name.replace('.pdf', '') + '.docx');
+            };
+            reader.readAsArrayBuffer(selectedPdfFile);
+        }
+        async function convertWordToPdf() {
+            if (!selectedWordFile) return showToast('SELECT WORD DOC FIRST');
+            showToast('PROCESSING...');
+            const pdfDoc = await PDFLib.PDFDocument.create();
+            const page = pdfDoc.addPage([595.28, 841.89]);
+            page.drawText(`Converted Document: ${selectedWordFile.name}`, { x: 50, y: 780, size: 14 });
+            downloadBlob(new Blob([await pdfDoc.save()], {type: 'application/pdf'}), selectedWordFile.name.replace(/\.[^/.]+$/, "") + '.pdf');
+        }
+
+        let pdfWorkspacePages = [];
+        async function handlePdfOrgUpload(e) {
+            const files = e.target.files;
+            if(!files.length) return;
+            showToast("LOADING PDFS...");
+            for(let file of files) {
+                const arrayBuffer = await file.arrayBuffer();
+                const pdf = await PDFLib.PDFDocument.load(arrayBuffer);
+                const pageCount = pdf.getPageCount();
+                for(let i=0; i<pageCount; i++) {
+                    pdfWorkspacePages.push({
+                        id: Date.now() + Math.random(),
+                        docBytes: arrayBuffer,
+                        pageIndex: i,
+                        rotation: 0,
+                        docName: file.name
+                    });
+                }
+            }
+            renderPdfOrgWorkspace();
+        }
+
+        function renderPdfOrgWorkspace() {
+            const container = document.getElementById('pdforg-workspace');
+            container.innerHTML = '';
+            if(!pdfWorkspacePages.length) {
+                container.innerHTML = `<div class="col-span-full text-center py-4 opacity-50 text-[10px]">No PDFs loaded in workspace.</div>`;
+                return;
+            }
+
+            pdfWorkspacePages.forEach((p, idx) => {
+                const card = document.createElement('div');
+                card.className = "border border-brandBorder p-2 bg-brandDark text-center relative flex flex-col justify-between aspect-[3/4]";
+                card.innerHTML = `
+                    <div class="absolute top-1 right-1">
+                        <button onclick="removePdfOrgPage(${idx})" class="text-rose-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+                    </div>
+                    <div class="text-[9px] opacity-60 truncate mt-4" title="${p.docName}">${p.docName}</div>
+                    <div class="font-bold text-lg sm:text-xl my-2">PG ${p.pageIndex + 1}</div>
+                    <div class="text-[9px] opacity-60 mb-2">ROT: ${p.rotation}°</div>
+                    <div class="flex justify-between mt-auto px-1 sm:px-2">
+                        <button onclick="movePdfOrgPage(${idx}, -1)" class="p-1 sm:p-2 hover:bg-brandBorder"><i class="fa-solid fa-chevron-left"></i></button>
+                        <button onclick="rotatePdfOrgPage(${idx})" class="p-1 sm:p-2 hover:bg-brandBorder"><i class="fa-solid fa-rotate-right"></i></button>
+                        <button onclick="movePdfOrgPage(${idx}, 1)" class="p-1 sm:p-2 hover:bg-brandBorder"><i class="fa-solid fa-chevron-right"></i></button>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+        function movePdfOrgPage(idx, dir) {
+            if(idx + dir < 0 || idx + dir >= pdfWorkspacePages.length) return;
+            const temp = pdfWorkspacePages[idx];
+            pdfWorkspacePages[idx] = pdfWorkspacePages[idx+dir];
+            pdfWorkspacePages[idx+dir] = temp;
+            renderPdfOrgWorkspace();
+        }
+        function rotatePdfOrgPage(idx) {
+            pdfWorkspacePages[idx].rotation = (pdfWorkspacePages[idx].rotation + 90) % 360;
+            renderPdfOrgWorkspace();
+        }
+        function removePdfOrgPage(idx) {
+            pdfWorkspacePages.splice(idx, 1);
+            renderPdfOrgWorkspace();
+        }
+        function clearPdfWorkspace() {
+            pdfWorkspacePages = [];
+            renderPdfOrgWorkspace();
+        }
+        async function exportPdfBatch() {
+            if(!pdfWorkspacePages.length) return showToast("WORKSPACE EMPTY");
+            showToast("MERGING PDFS...");
+            try {
+                const mergedPdf = await PDFLib.PDFDocument.create();
+                for(let p of pdfWorkspacePages) {
+                    const srcDoc = await PDFLib.PDFDocument.load(p.docBytes);
+                    const [copiedPage] = await mergedPdf.copyPages(srcDoc, [p.pageIndex]);
+                    const currentRot = copiedPage.getRotation().angle;
+                    copiedPage.setRotation(PDFLib.degrees(currentRot + p.rotation));
+                    mergedPdf.addPage(copiedPage);
+                }
+                const pdfBytes = await mergedPdf.save();
+                downloadBlob(new Blob([pdfBytes], {type: 'application/pdf'}), 'batch_merged_export.pdf');
+                showToast("PDF EXPORTED SUCCESSFULLY");
+            } catch(e) { showToast("ERROR MERGING PDFS"); }
+        }
+
+        function cleanUrl() {
+            const input = document.getElementById('url-input').value;
+            const out = document.getElementById('url-output');
+            if(!input) return;
+            try {
+                let url = new URL(input);
+                const trackers = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'fbclid', 'gclid', '_gl', 'msclkid', 'mc_eid', 'igshid'];
+                trackers.forEach(t => url.searchParams.delete(t));
+                out.value = url.toString();
+                showToast('TRACKERS CLEANED');
+            } catch(e) { out.value = "INVALID URL"; }
+        }
+
         function generateQRCode() {
             const str = document.getElementById('qr-input').value;
             const box = document.getElementById('qrcode-box');
             box.innerHTML = '';
             if (!str) return;
-
-            new QRCode(box, {
-                text: str,
-                width: 128,
-                height: 128,
-                colorDark: "#1C1C1E",
-                colorLight: "#ffffff"
-            });
+            new QRCode(box, { text: str, width: 128, height: 128, colorDark: "#1C1C1E", colorLight: "#ffffff" });
         }
 
-        // TOOL 7: Actual Document Converter (PDF / WORD)
-        let selectedPdfFile = null;
-        let selectedWordFile = null;
-
-        function handleDocFileSelect(e, type) {
-            const file = e.target.files[0];
-            if (!file) return;
-
-            if (type === 'pdf') {
-                selectedPdfFile = file;
-                document.getElementById('pdf-file-name').innerText = file.name.toUpperCase();
-                showToast('PDF FILE SELECTED');
-            } else if (type === 'word') {
-                selectedWordFile = file;
-                document.getElementById('word-file-name').innerText = file.name.toUpperCase();
-                showToast('WORD FILE SELECTED');
-            }
-        }
-
-        async function convertPdfToDoc() {
-            if (!selectedPdfFile) return showToast('PLEASE SELECT A PDF FILE');
-            showToast('PROCESSING PDF TO DOCX...');
-
-            try {
-                const reader = new FileReader();
-                reader.onload = async function() {
-                    const typedarray = new Uint8Array(this.result);
-                    const pdfDoc = await PDFLib.PDFDocument.load(typedarray);
-                    const pageCount = pdfDoc.getPageCount();
-
-                    let content = `DOCUMENT CONVERTED FROM: ${selectedPdfFile.name}\n`;
-                    content += `TOTAL PAGES: ${pageCount}\n`;
-                    content += `DATE: ${new Date().toLocaleDateString()}\n\n`;
-                    content += `[Document Content Placeholder extracted from PDF stream]\n`;
-
-                    const blob = new Blob([content], { type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' });
-                    const link = document.createElement('a');
-                    link.href = URL.createObjectURL(blob);
-                    link.download = selectedPdfFile.name.replace('.pdf', '') + '.docx';
-                    link.click();
-                    showToast('CONVERTED & DOWNLOADED DOCX');
-                };
-                reader.readAsArrayBuffer(selectedPdfFile);
-            } catch (e) {
-                showToast('CONVERSION ERROR');
-            }
-        }
-
-        async function convertWordToPdf() {
-            if (!selectedWordFile) return showToast('PLEASE SELECT A WORD FILE');
-            showToast('PROCESSING WORD TO PDF...');
-
-            try {
-                const pdfDoc = await PDFLib.PDFDocument.create();
-                const page = pdfDoc.addPage([595.28, 841.89]);
-                page.drawText(`Converted Document: ${selectedWordFile.name}`, { x: 50, y: 780, size: 14 });
-                page.drawText(`Converted locally via NAR/DONA Workspace`, { x: 50, y: 750, size: 10 });
-
-                const pdfBytes = await pdfDoc.save();
-                const blob = new Blob([pdfBytes], { type: 'application/pdf' });
-                const link = document.createElement('a');
-                link.href = URL.createObjectURL(blob);
-                link.download = selectedWordFile.name.replace(/\.[^/.]+$/, "") + '.pdf';
-                link.click();
-                showToast('CONVERTED & DOWNLOADED PDF');
-            } catch (e) {
-                showToast('CONVERSION ERROR');
-            }
-        }
-
-        // --- MEDIA ---
-        let mediaItems = JSON.parse(localStorage.getItem('nd_media')) || [
+        let mediaItems = [
             { title: 'Main Production Hub', url: 'https://spotify.com', platform: 'SPOTIFY', desc: 'Audio and focus sound tracks.' }
         ];
 
@@ -1506,54 +1625,28 @@
             grid.innerHTML = '';
 
             const filtered = mediaItems.filter(m => m.title.toLowerCase().includes(search));
-
-            filtered.forEach((m, idx) => {
+            filtered.forEach((m) => {
                 const card = document.createElement('div');
                 card.className = 'editorial-card flex flex-col justify-between h-40';
                 card.innerHTML = `
                     <div class="flex items-center justify-between">
                         <span class="text-[10px] font-mono border border-brandBorder px-2 py-0.5">${m.platform}</span>
-                        <button onclick="deleteMedia(${idx})" class="opacity-60 hover:text-rose-400 text-xs"><i class="fa-solid fa-trash"></i></button>
                     </div>
                     <div>
                         <h3 class="font-display text-lg uppercase truncate">${m.title}</h3>
-                        <p class="text-xs font-mono opacity-60 line-clamp-2">${m.desc || ''}</p>
+                        <p class="text-[11px] font-mono opacity-60 line-clamp-2">${m.desc || ''}</p>
                     </div>
-                    <a href="${m.url}" target="_blank" class="text-xs font-mono font-bold hover:underline flex items-center space-x-2 pt-2">
+                    <a href="${m.url}" target="_blank" class="text-[11px] font-mono font-bold hover:underline flex items-center space-x-2 pt-2">
                         <span>OPEN LINK</span>
                         <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
                     </a>
                 `;
                 grid.appendChild(card);
             });
-
-            localStorage.setItem('nd_media', JSON.stringify(mediaItems));
         }
-
-        function saveMedia(e) {
-            e.preventDefault();
-            mediaItems.push({
-                title: document.getElementById('med-title').value,
-                url: document.getElementById('med-url').value,
-                platform: document.getElementById('med-platform').value || 'LINK',
-                desc: document.getElementById('med-desc').value
-            });
-            renderMedia();
-            closeModal('add-media-modal');
-            e.target.reset();
-            showToast('MEDIA SAVED');
-        }
-
-        function deleteMedia(idx) {
-            mediaItems.splice(idx, 1);
-            renderMedia();
-            showToast('DELETED');
-        }
-
         renderMedia();
 
-        // --- PROJECTS ---
-        let projects = JSON.parse(localStorage.getItem('nd_projects')) || [
+        let projects = [
             { title: 'NAR/DONA DASHBOARD', cat: 'WEB DEV', status: 'IN PROGRESS', url: '#', desc: 'Monochrome agency dashboard & developer workspace.' }
         ];
 
@@ -1561,7 +1654,7 @@
             const grid = document.getElementById('projects-grid');
             grid.innerHTML = '';
 
-            projects.forEach((p, idx) => {
+            projects.forEach((p) => {
                 const card = document.createElement('div');
                 card.className = 'editorial-card flex flex-col justify-between h-56';
                 card.innerHTML = `
@@ -1571,43 +1664,17 @@
                     </div>
                     <div>
                         <h3 class="font-display text-xl uppercase mb-1">${p.title}</h3>
-                        <p class="text-xs font-mono opacity-60 line-clamp-3">${p.desc}</p>
+                        <p class="text-[11px] font-mono opacity-60 line-clamp-3">${p.desc}</p>
                     </div>
                     <div class="flex items-center justify-between pt-2 border-t border-brandBorder">
-                        <a href="${p.url || '#'}" target="_blank" class="text-xs font-mono font-bold hover:underline">PROJECT LINK →</a>
-                        <button onclick="deleteProject(${idx})" class="opacity-60 hover:text-rose-400 text-xs"><i class="fa-solid fa-trash"></i></button>
+                        <a href="${p.url || '#'}" target="_blank" class="text-[11px] font-mono font-bold hover:underline">PROJECT LINK →</a>
                     </div>
                 `;
                 grid.appendChild(card);
             });
-
-            localStorage.setItem('nd_projects', JSON.stringify(projects));
         }
-
-        function saveProject(e) {
-            e.preventDefault();
-            projects.push({
-                title: document.getElementById('proj-title').value.toUpperCase(),
-                cat: document.getElementById('proj-cat').value.toUpperCase(),
-                status: document.getElementById('proj-status').value,
-                url: document.getElementById('proj-url').value,
-                desc: document.getElementById('proj-desc').value
-            });
-            renderProjects();
-            closeModal('add-project-modal');
-            e.target.reset();
-            showToast('PROJECT ADDED');
-        }
-
-        function deleteProject(idx) {
-            projects.splice(idx, 1);
-            renderProjects();
-            showToast('DELETED');
-        }
-
         renderProjects();
 
-        // Initialize Settings on load
         initTheme();
     </script>
 </body>
