@@ -732,7 +732,7 @@
                                 </div>
                                 <div>
                                     <label class="block opacity-60 text-[10px] uppercase mb-1">QUALITY (<span id="img-q-val">80</span>%)</label>
-                                    <input type="range" id="img-quality" min="10" max="100" value="80" oninput="document.getElementById('img-q-val').innerText = this.value" class="w-full mt-2">
+                                    <input type="range" id="img-quality" min="1" max="100" value="80" oninput="document.getElementById('img-q-val').innerText = this.value" class="w-full mt-2">
                                 </div>
                             </div>
 
@@ -810,6 +810,7 @@
                         </div>
                         <div class="flex flex-col items-center justify-center border border-brandBorder p-6 space-y-3">
                             <div id="qrcode-box" class="p-3 bg-white rounded"></div>
+                            <button id="qr-download-btn" onclick="downloadQRCode()" class="hidden editorial-btn w-full py-1.5 font-display uppercase text-[10px]">DOWNLOAD QR IMAGE</button>
                             <span class="text-[10px] opacity-60">100% Client-side Offline QR</span>
                         </div>
                     </div>
@@ -848,6 +849,9 @@
                         <span>PROJECT CATALOG</span>
                     </div>
                     <h1 class="font-display text-4xl sm:text-5xl uppercase" data-i18n="nav_projects">PROJECTS</h1>
+                </div>
+                <div class="flex items-center w-full md:w-auto">
+                    <input type="text" id="projects-search" oninput="renderProjects()" placeholder="Search projects..." class="bg-transparent border border-brandBorder px-3 py-2 text-xs font-mono focus:outline-none focus:border-brandLight w-full md:w-48">
                 </div>
             </div>
             <div id="projects-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6"></div>
@@ -1395,9 +1399,38 @@
         function generateQRCode() {
             const str = document.getElementById('qr-input').value;
             const box = document.getElementById('qrcode-box');
+            const downloadBtn = document.getElementById('qr-download-btn');
             box.innerHTML = '';
-            if (!str) return;
+            if (!str) {
+                downloadBtn.classList.add('hidden');
+                return;
+            }
             new QRCode(box, { text: str, width: 128, height: 128, colorDark: "#1C1C1E", colorLight: "#ffffff" });
+            downloadBtn.classList.remove('hidden');
+        }
+
+        function downloadQRCode() {
+            const box = document.getElementById('qrcode-box');
+            const img = box.querySelector('img');
+            const canvas = box.querySelector('canvas');
+
+            let imageUrl = '';
+            if (img && img.src) {
+                imageUrl = img.src;
+            } else if (canvas) {
+                imageUrl = canvas.toDataURL('image/png');
+            }
+
+            if (!imageUrl) {
+                showToast('GENERATE QR FIRST');
+                return;
+            }
+
+            const link = document.createElement('a');
+            link.href = imageUrl;
+            link.download = `qrcode-${Date.now()}.png`;
+            link.click();
+            showToast('QR DOWNLOADED');
         }
 
         let mediaItems = [
@@ -1432,14 +1465,16 @@
         renderMedia();
 
         let projects = [
-            { title: 'NAR/DONA DASHBOARD', cat: 'WEB DEV', status: 'IN PROGRESS', url: '#', desc: 'Monochrome agency dashboard & developer workspace.' }
+            { title: 'NAR/DONA WORKSPACE', cat: 'WEB DEV', status: 'ACTIVE', url: 'https://github.com/cerevainways/my-workspace', desc: 'Personal web workspaces and developer utilities on GitHub Pages.' }
         ];
 
         function renderProjects() {
             const grid = document.getElementById('projects-grid');
+            const search = document.getElementById('projects-search').value.toLowerCase();
             grid.innerHTML = '';
 
-            projects.forEach((p) => {
+            const filtered = projects.filter(p => p.title.toLowerCase().includes(search));
+            filtered.forEach((p) => {
                 const card = document.createElement('div');
                 card.className = 'editorial-card flex flex-col justify-between h-56';
                 card.innerHTML = `
