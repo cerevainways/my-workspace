@@ -38,7 +38,6 @@
     <!-- External Libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/exif-js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@jaames/iro@5"></script>
@@ -318,7 +317,7 @@
                 </div>
             </section>
 
-            <!-- ABOUT Section (Restored) -->
+            <!-- ABOUT Section -->
             <section class="editorial-card space-y-6">
                 <div class="border-b border-brandBorder pb-5">
                     <div class="flex items-center space-x-2 text-xs font-mono opacity-60">
@@ -419,16 +418,6 @@
                                         <i class="fa-solid fa-palette w-4 opacity-40 group-hover:opacity-100"></i> <span class="group-hover:underline">Color Tools</span>
                                     </button>
                                 </li>
-                                <li>
-                                    <button onclick="switchView('toolkit'); switchToolTab('doc')" class="hover:text-brandLight text-left flex items-center space-x-2 group w-full">
-                                        <i class="fa-solid fa-file-pdf w-4 opacity-40 group-hover:opacity-100"></i> <span class="group-hover:underline">Doc Converter</span>
-                                    </button>
-                                </li>
-                                <li>
-                                    <button onclick="switchView('toolkit'); switchToolTab('pdforg')" class="hover:text-brandLight text-left flex items-center space-x-2 group w-full">
-                                        <i class="fa-solid fa-layer-group w-4 opacity-40 group-hover:opacity-100"></i> <span class="group-hover:underline">PDF Batch</span>
-                                    </button>
-                                </li>
                             </ul>
                         </div>
                     </div>
@@ -459,8 +448,6 @@
                     <button onclick="switchToolTab('color')" id="ttab-btn-color" class="px-3 py-1.5 border border-brandBorder opacity-60 hover:opacity-100 whitespace-nowrap">COLOR</button>
                     <button onclick="switchToolTab('meta')" id="ttab-btn-meta" class="px-3 py-1.5 border border-brandBorder opacity-60 hover:opacity-100 whitespace-nowrap">META</button>
                     <button onclick="switchToolTab('img')" id="ttab-btn-img" class="px-3 py-1.5 border border-brandBorder opacity-60 hover:opacity-100 whitespace-nowrap">IMAGE</button>
-                    <button onclick="switchToolTab('doc')" id="ttab-btn-doc" class="px-3 py-1.5 border border-brandBorder opacity-60 hover:opacity-100 whitespace-nowrap">DOC/PDF</button>
-                    <button onclick="switchToolTab('pdforg')" id="ttab-btn-pdforg" class="px-3 py-1.5 border border-brandBorder opacity-60 hover:opacity-100 whitespace-nowrap">PDF BATCH</button>
                     <button onclick="switchToolTab('url')" id="ttab-btn-url" class="px-3 py-1.5 border border-brandBorder opacity-60 hover:opacity-100 whitespace-nowrap">URL CLEAN</button>
                     <button onclick="switchToolTab('qr')" id="ttab-btn-qr" class="px-3 py-1.5 border border-brandBorder opacity-60 hover:opacity-100 whitespace-nowrap">QR</button>
                 </div>
@@ -622,7 +609,7 @@
                 </div>
             </div>
 
-            <!-- TOOL 3: COLOR TOOLS (UPDATED MULTI-SLIDER IN FRAME) -->
+            <!-- TOOL 3: COLOR TOOLS -->
             <div id="ttab-color" class="toolkit-sub-tab space-y-6 hidden">
                 <div class="editorial-card space-y-6">
                     <div class="flex items-center space-x-2 text-xs font-mono opacity-60 border-b border-brandBorder pb-2">
@@ -774,74 +761,6 @@
 
                             <a id="img-download-btn" class="hidden editorial-btn w-full text-center py-2 text-xs font-display uppercase block">DOWNLOAD IMAGE</a>
                         </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- TOOL 6: DOCUMENT CONVERTER -->
-            <div id="ttab-doc" class="toolkit-sub-tab space-y-6 hidden">
-                <div class="editorial-card space-y-4">
-                    <div class="flex items-center space-x-2 text-xs font-mono opacity-60 border-b border-brandBorder pb-2">
-                        <i class="fa-solid fa-file-pdf text-xs"></i>
-                        <span>DOCUMENT FILE CONVERTER (PDF ↔ WORD)</span>
-                    </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 font-mono text-xs">
-                        <div class="space-y-3 border border-brandBorder p-4 lg:p-5">
-                            <span class="font-bold block uppercase flex items-center justify-between">
-                                <span>PDF TO DOCX</span>
-                                <i class="fa-solid fa-file-word text-sm opacity-60"></i>
-                            </span>
-                            <div id="pdf-drop-area" onclick="document.getElementById('pdf-file-input').click()" class="border border-dashed border-brandBorder p-6 text-center cursor-pointer hover:border-brandLight transition overflow-hidden">
-                                <i class="fa-solid fa-file-pdf text-2xl mb-1 opacity-60"></i>
-                                <div id="pdf-file-name" class="font-bold truncate px-2">DROP OR CLICK PDF</div>
-                                <input type="file" id="pdf-file-input" accept=".pdf" onchange="handleDocFileSelect({target: {files: event.target.files}}, 'pdf')" class="hidden">
-                            </div>
-                            <button onclick="convertPdfToDoc()" class="editorial-btn w-full py-2.5 font-display text-xs uppercase">CONVERT TO DOCX</button>
-                        </div>
-
-                        <div class="space-y-3 border border-brandBorder p-4 lg:p-5">
-                            <span class="font-bold block uppercase flex items-center justify-between">
-                                <span>WORD TO PDF</span>
-                                <i class="fa-solid fa-file-pdf text-sm opacity-60"></i>
-                            </span>
-                            <div id="word-drop-area" onclick="document.getElementById('word-file-input').click()" class="border border-dashed border-brandBorder p-6 text-center cursor-pointer hover:border-brandLight transition overflow-hidden">
-                                <i class="fa-solid fa-file-word text-2xl mb-1 opacity-60"></i>
-                                <div id="word-file-name" class="font-bold truncate px-2">DROP OR CLICK WORD</div>
-                                <input type="file" id="word-file-input" accept=".doc,.docx" onchange="handleDocFileSelect({target: {files: event.target.files}}, 'word')" class="hidden">
-                            </div>
-                            <button onclick="convertWordToPdf()" class="editorial-btn-outline w-full py-2.5 font-mono text-xs uppercase font-bold">CONVERT TO PDF</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- TOOL: PDF BATCH ORGANIZER -->
-            <div id="ttab-pdforg" class="toolkit-sub-tab space-y-6 hidden">
-                <div class="editorial-card space-y-4">
-                    <div class="flex items-center space-x-2 text-xs font-mono opacity-60 border-b border-brandBorder pb-2">
-                        <i class="fa-solid fa-file-pdf text-xs"></i>
-                        <span>PDF BATCH ORGANIZER (MERGE, REORDER, ROTATE)</span>
-                    </div>
-
-                    <div class="font-mono text-xs space-y-4">
-                        <div id="pdforg-drop-area" onclick="document.getElementById('pdforg-file-input').click()" class="border-2 border-dashed border-brandBorder p-6 lg:p-8 text-center cursor-pointer hover:border-brandLight transition focus:outline-none relative">
-                            <i class="fa-solid fa-layer-group text-3xl mb-2 opacity-60"></i>
-                            <p class="font-bold">DROP MULTIPLE PDF FILES HERE TO BATCH</p>
-                            <span class="text-[10px] opacity-60">All processing happens locally</span>
-                            <input type="file" id="pdforg-file-input" accept=".pdf" multiple onchange="handlePdfOrgUpload(event)" class="hidden">
-                        </div>
-
-                        <div class="border border-brandBorder p-3 lg:p-4 bg-brandDark/40">
-                            <div class="flex justify-between items-center mb-3">
-                                <h3 class="font-bold uppercase">Workspace Sequence</h3>
-                                <button onclick="clearPdfWorkspace()" class="opacity-60 hover:text-rose-400">CLEAR ALL</button>
-                            </div>
-                            <div id="pdforg-workspace" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 max-h-64 overflow-y-auto pr-2">
-                                <div class="col-span-full text-center py-4 opacity-50 text-[10px]">No PDFs loaded in workspace.</div>
-                            </div>
-                        </div>
-                        <button onclick="exportPdfBatch()" class="editorial-btn w-full py-3 font-display text-xs uppercase">MERGE & EXPORT FINAL PDF</button>
                     </div>
                 </div>
             </div>
@@ -1072,7 +991,7 @@
 
         function getActiveFileTool() {
             if (document.getElementById('view-toolkit').classList.contains('hidden')) return null;
-            const tools = ['ttab-meta', 'ttab-img', 'ttab-doc', 'ttab-pdforg', 'ttab-crypto'];
+            const tools = ['ttab-meta', 'ttab-img', 'ttab-crypto'];
             for (let t of tools) {
                 if (!document.getElementById(t).classList.contains('hidden')) return t;
             }
@@ -1090,21 +1009,9 @@
             } else if (active === 'ttab-img') {
                 document.getElementById('img-file').files = files;
                 handleImageUpload(fakeEvent);
-            } else if (active === 'ttab-pdforg') {
-                document.getElementById('pdforg-file-input').files = files;
-                handlePdfOrgUpload(fakeEvent);
             } else if (active === 'ttab-crypto') {
                 document.getElementById('crypto-file-input').files = files;
                 handleCryptoFileSelect(fakeEvent);
-            } else if (active === 'ttab-doc') {
-                const ext = files[0].name.split('.').pop().toLowerCase();
-                if (ext === 'pdf') {
-                    document.getElementById('pdf-file-input').files = files;
-                    handleDocFileSelect(fakeEvent, 'pdf');
-                } else {
-                    document.getElementById('word-file-input').files = files;
-                    handleDocFileSelect(fakeEvent, 'word');
-                }
             }
         }
 
@@ -1112,9 +1019,6 @@
             const dropZones = [
                 { id: 'meta-drop-area', inputId: 'meta-file-input', handler: scanFileMetadata },
                 { id: 'img-drop-area', inputId: 'img-file', handler: handleImageUpload },
-                { id: 'pdf-drop-area', inputId: 'pdf-file-input', handler: (e) => handleDocFileSelect(e, 'pdf') },
-                { id: 'word-drop-area', inputId: 'word-file-input', handler: (e) => handleDocFileSelect(e, 'word') },
-                { id: 'pdforg-drop-area', inputId: 'pdforg-file-input', handler: handlePdfOrgUpload },
                 { id: 'crypto-drop-area', inputId: 'crypto-file-input', handler: handleCryptoFileSelect }
             ];
 
@@ -1172,7 +1076,7 @@
             const targetTab = document.getElementById(`ttab-${tab}`);
             if(targetTab) targetTab.classList.remove('hidden');
 
-            ['encode', 'json', 'passhash', 'crypto', 'color', 'meta', 'img', 'doc', 'pdforg', 'url', 'qr'].forEach(t => {
+            ['encode', 'json', 'passhash', 'crypto', 'color', 'meta', 'img', 'url', 'qr'].forEach(t => {
                 const btn = document.getElementById(`ttab-btn-${t}`);
                 if (btn) {
                     if (t === tab) btn.className = 'px-3 py-1.5 border border-brandLight bg-brandLight text-brandDark font-bold whitespace-nowrap transition-colors';
@@ -1297,7 +1201,7 @@
         }
 
         // ==========================================
-        // TOOL 3: COLOR TOOLS (UPDATED MULTI-SLIDER IN FRAME)
+        // TOOL 3: COLOR TOOLS
         // ==========================================
         let iroColorPicker;
         const colorPalettes = [
@@ -1473,151 +1377,6 @@
                 await worker.terminate();
                 showToast('OCR COMPLETE');
             } catch (err) { res.value = '// OCR Failed'; }
-        }
-
-        let selectedPdfFile = null; let selectedWordFile = null;
-        function handleDocFileSelect(e, type) {
-            const file = e.target.files[0];
-            if (!file) return;
-            if (type === 'pdf') {
-                selectedPdfFile = file;
-                document.getElementById('pdf-file-name').innerText = file.name.toUpperCase();
-            } else if (type === 'word') {
-                selectedWordFile = file;
-                document.getElementById('word-file-name').innerText = file.name.toUpperCase();
-            }
-        }
-        async function convertPdfToDoc() {
-            if (!selectedPdfFile) return showToast('PLEASE SELECT A PDF FILE FIRST');
-            showToast('PROCESSING PDF CONVERSION...');
-            try {
-                const reader = new FileReader();
-                reader.onload = async function() {
-                    const typedarray = new Uint8Array(this.result);
-                    const pdfDoc = await PDFLib.PDFDocument.load(typedarray);
-                    const pageCount = pdfDoc.getPageCount();
-                    
-                    // Generating base text structure from PDF pages for Word
-                    let content = `=== CONVERTED PDF DOCUMENT ===\n`;
-                    content += `Original File Name : ${selectedPdfFile.name}\n`;
-                    content += `Total Pages        : ${pageCount}\n`;
-                    content += `Converted Via      : NAR/DONA Workspace (Client-Side)\n\n`;
-                    content += `Note: Pure client-side conversion extracts basic document structures. For advanced layouts, please use a dedicated text editor.\n`;
-
-                    const blob = new Blob([content], {type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'});
-                    downloadBlob(blob, selectedPdfFile.name.replace('.pdf', '') + '_converted.docx');
-                    showToast('CONVERSION DOWNLOADED SUCCESSFULLY');
-                };
-                reader.readAsArrayBuffer(selectedPdfFile);
-            } catch (error) {
-                showToast('FAILED TO PROCESS PDF');
-            }
-        }
-
-        async function convertWordToPdf() {
-            if (!selectedWordFile) return showToast('PLEASE SELECT A WORD FILE FIRST');
-            showToast('PROCESSING WORD CONVERSION...');
-            try {
-                const pdfDoc = await PDFLib.PDFDocument.create();
-                const page = pdfDoc.addPage([595.28, 841.89]); // A4 Size
-                
-                page.drawText(`Converted Word Document:`, { x: 50, y: 780, size: 16 });
-                page.drawText(`${selectedWordFile.name}`, { x: 50, y: 750, size: 12 });
-                page.drawText(`Locally converted via NAR/DONA Workspace.`, { x: 50, y: 720, size: 10 });
-
-                const pdfBytes = await pdfDoc.save();
-                const blob = new Blob([pdfBytes], {type: 'application/pdf'});
-                downloadBlob(blob, selectedWordFile.name.replace(/\.[^/.]+$/, "") + '_converted.pdf');
-                showToast('CONVERSION DOWNLOADED SUCCESSFULLY');
-            } catch (error) {
-                showToast('FAILED TO PROCESS WORD DOCUMENT');
-            }
-        }
-
-        let pdfWorkspacePages = [];
-        async function handlePdfOrgUpload(e) {
-            const files = e.target.files;
-            if(!files.length) return;
-            showToast("LOADING PDFS...");
-            for(let file of files) {
-                const arrayBuffer = await file.arrayBuffer();
-                const pdf = await PDFLib.PDFDocument.load(arrayBuffer);
-                const pageCount = pdf.getPageCount();
-                for(let i=0; i<pageCount; i++) {
-                    pdfWorkspacePages.push({
-                        id: Date.now() + Math.random(),
-                        docBytes: arrayBuffer,
-                        pageIndex: i,
-                        rotation: 0,
-                        docName: file.name
-                    });
-                }
-            }
-            renderPdfOrgWorkspace();
-        }
-
-        function renderPdfOrgWorkspace() {
-            const container = document.getElementById('pdforg-workspace');
-            container.innerHTML = '';
-            if(!pdfWorkspacePages.length) {
-                container.innerHTML = `<div class="col-span-full text-center py-4 opacity-50 text-[10px]">No PDFs loaded in workspace.</div>`;
-                return;
-            }
-
-            pdfWorkspacePages.forEach((p, idx) => {
-                const card = document.createElement('div');
-                card.className = "border border-brandBorder p-2 bg-brandDark text-center relative flex flex-col justify-between aspect-[3/4]";
-                card.innerHTML = `
-                    <div class="absolute top-1 right-1">
-                        <button onclick="removePdfOrgPage(${idx})" class="text-rose-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
-                    </div>
-                    <div class="text-[9px] opacity-60 truncate mt-4" title="${p.docName}">${p.docName}</div>
-                    <div class="font-bold text-lg sm:text-xl my-2">PG ${p.pageIndex + 1}</div>
-                    <div class="text-[9px] opacity-60 mb-2">ROT: ${p.rotation}°</div>
-                    <div class="flex justify-between mt-auto px-1 sm:px-2">
-                        <button onclick="movePdfOrgPage(${idx}, -1)" class="p-1 sm:p-2 hover:bg-brandBorder"><i class="fa-solid fa-chevron-left"></i></button>
-                        <button onclick="rotatePdfOrgPage(${idx})" class="p-1 sm:p-2 hover:bg-brandBorder"><i class="fa-solid fa-rotate-right"></i></button>
-                        <button onclick="movePdfOrgPage(${idx}, 1)" class="p-1 sm:p-2 hover:bg-brandBorder"><i class="fa-solid fa-chevron-right"></i></button>
-                    </div>
-                `;
-                container.appendChild(card);
-            });
-        }
-        function movePdfOrgPage(idx, dir) {
-            if(idx + dir < 0 || idx + dir >= pdfWorkspacePages.length) return;
-            const temp = pdfWorkspacePages[idx];
-            pdfWorkspacePages[idx] = pdfWorkspacePages[idx+dir];
-            pdfWorkspacePages[idx+dir] = temp;
-            renderPdfOrgWorkspace();
-        }
-        function rotatePdfOrgPage(idx) {
-            pdfWorkspacePages[idx].rotation = (pdfWorkspacePages[idx].rotation + 90) % 360;
-            renderPdfOrgWorkspace();
-        }
-        function removePdfOrgPage(idx) {
-            pdfWorkspacePages.splice(idx, 1);
-            renderPdfOrgWorkspace();
-        }
-        function clearPdfWorkspace() {
-            pdfWorkspacePages = [];
-            renderPdfOrgWorkspace();
-        }
-        async function exportPdfBatch() {
-            if(!pdfWorkspacePages.length) return showToast("WORKSPACE EMPTY");
-            showToast("MERGING PDFS...");
-            try {
-                const mergedPdf = await PDFLib.PDFDocument.create();
-                for(let p of pdfWorkspacePages) {
-                    const srcDoc = await PDFLib.PDFDocument.load(p.docBytes);
-                    const [copiedPage] = await mergedPdf.copyPages(srcDoc, [p.pageIndex]);
-                    const currentRot = copiedPage.getRotation().angle;
-                    copiedPage.setRotation(PDFLib.degrees(currentRot + p.rotation));
-                    mergedPdf.addPage(copiedPage);
-                }
-                const pdfBytes = await mergedPdf.save();
-                downloadBlob(new Blob([pdfBytes], {type: 'application/pdf'}), 'batch_merged_export.pdf');
-                showToast("PDF EXPORTED SUCCESSFULLY");
-            } catch(e) { showToast("ERROR MERGING PDFS"); }
         }
 
         function cleanUrl() {
