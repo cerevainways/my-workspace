@@ -1,6 +1,6 @@
 # NAR/DONA | Personal Workspace
 
-![Preview Workspace](images/about.png)
+![Preview Workspace](assets/about.png)
 
 ## 🛠️ Toolkit Modules
 
@@ -17,7 +17,7 @@ This workspace is equipped with various essential utility modules that can be ac
 * **Color Tools & Visualizer**: Interactive color palette complete with a Color Wheel and precise Hue, Saturation, and Value sliders.
 
 ---
-![Preview Workspace](images/directory.png)
+![Preview Workspace](assets/directory.png)
 
 ## 📂 Workspace Directory
 
